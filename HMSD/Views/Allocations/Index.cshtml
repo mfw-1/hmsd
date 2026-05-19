@@ -1,0 +1,83 @@
+@model IEnumerable<HMSD.Data.Allocation>
+
+@{
+    ViewData["Title"] = "Allocations";
+}
+
+<h1>Allocations</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Student)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Bed)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AllocatedDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ExpectedCheckoutDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ActualCheckoutDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Status)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Remarks)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CreatedAt)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UpdatedAt)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Student.Address)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Bed.BedNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AllocatedDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ExpectedCheckoutDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ActualCheckoutDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Status)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Remarks)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreatedAt)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UpdatedAt)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

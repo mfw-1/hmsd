@@ -1,0 +1,149 @@
+﻿@{
+    ViewData["Title"] = "Dashboard";
+}
+
+<div class="container-fluid">
+
+    <!-- HEADER -->
+    <div class="mb-4">
+        <h2 class="fw-bold mb-1">Dashboard</h2>
+        <small class="text-muted">Hostel Management System Overview</small>
+    </div>
+
+    <!-- STATS CARDS -->
+    <div class="row g-3">
+
+        <div class="col-md-3">
+            <div class="card shadow-sm border-0 rounded-4">
+                <div class="card-body d-flex justify-content-between">
+                    <div>
+                        <div class="text-muted">Students</div>
+                        <h3 class="fw-bold">@ViewBag.Students</h3>
+                    </div>
+                    <i class="fa fa-user-graduate fs-1 text-primary"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card shadow-sm border-0 rounded-4">
+                <div class="card-body d-flex justify-content-between">
+                    <div>
+                        <div class="text-muted">Rooms</div>
+                        <h3 class="fw-bold">@ViewBag.Rooms</h3>
+                    </div>
+                    <i class="fa fa-bed fs-1 text-success"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card shadow-sm border-0 rounded-4">
+                <div class="card-body d-flex justify-content-between">
+                    <div>
+                        <div class="text-muted">Beds</div>
+                        <h3 class="fw-bold">@ViewBag.Beds</h3>
+                    </div>
+                    <i class="fa fa-hotel fs-1 text-warning"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card shadow-sm border-0 rounded-4">
+                <div class="card-body d-flex justify-content-between">
+                    <div>
+                        <div class="text-muted">Complaints</div>
+                        <h3 class="fw-bold">@ViewBag.Complaints</h3>
+                    </div>
+                    <i class="fa fa-exclamation-circle fs-1 text-danger"></i>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- SECOND SECTION -->
+    <div class="row mt-4 g-3">
+
+        <!-- SYSTEM STATUS -->
+        <div class="col-md-6">
+            <div class="card shadow-sm border-0 rounded-4">
+                <div class="card-header bg-white border-0">
+                    <h5 class="fw-bold mb-0">System Status</h5>
+                </div>
+
+                <div class="card-body">
+
+                    <!-- Occupancy -->
+                    <div class="mb-3">
+                        <div class="d-flex justify-content-between">
+                            <span>Room Occupancy</span>
+                            <span>@ViewBag.Occupancy%</span>
+                        </div>
+                        <div class="progress">
+                            <div class="progress-bar bg-success"
+                                 style="width:@ViewBag.Occupancy%"></div>
+                        </div>
+                    </div>
+
+                    <!-- Fee -->
+                    <div class="mb-3">
+                        <div class="d-flex justify-content-between">
+                            <span>Fee Collection</span>
+                            <span>@ViewBag.FeeRate%</span>
+                        </div>
+                        <div class="progress">
+                            <div class="progress-bar bg-primary"
+                                 style="width:@ViewBag.FeeRate%"></div>
+                        </div>
+                    </div>
+
+                    <!-- Complaints -->
+                    <div class="mb-3">
+                        <div class="d-flex justify-content-between">
+                            <span>Complaint Resolution</span>
+                            <span>@ViewBag.ComplaintRate%</span>
+                        </div>
+                        <div class="progress">
+                            <div class="progress-bar bg-danger"
+                                 style="width:@ViewBag.ComplaintRate%"></div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- QUICK ACTIONS -->
+        <div class="col-md-6">
+            <div class="card shadow-sm border-0 rounded-4">
+                <div class="card-header bg-white border-0">
+                    <h5 class="fw-bold mb-0">Quick Actions</h5>
+                </div>
+
+                <div class="card-body d-grid gap-2">
+
+                    <a asp-controller="Students" asp-action="Create" class="btn btn-primary">
+                        <i class="fa fa-user-plus"></i> Add Student
+                    </a>
+
+                    <a asp-controller="Rooms" asp-action="Create" class="btn btn-success">
+                        <i class="fa fa-plus"></i> Add Room
+                    </a>
+
+                    <a asp-controller="Allocations" asp-action="Create" class="btn btn-warning text-white">
+                        <i class="fa fa-handshake"></i> Allocate Bed
+                    </a>
+
+                    <a asp-controller="Complaints" asp-action="Index" class="btn btn-danger">
+                        <i class="fa fa-exclamation-circle"></i> View Complaints
+                    </a>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
