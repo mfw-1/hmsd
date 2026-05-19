@@ -1,7 +1,9 @@
 ﻿using HMSD.Data;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
+[Authorize(Roles = "Admin")]
 public class DashboardController : Controller
 {
     private readonly ApplicationDbContext _context;
