@@ -9,20 +9,38 @@
 }
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-bs-theme="light">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <title>@ViewData["Title"] - Hostel Management System</title>
 
-    <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
-
-    <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet" />
 
     <style>
+            /* Enterprise CSS System Tokens */
+            :root, [data-bs-theme="light"] {
+                --bg-body: #f8fafc;
+                --bg-topbar: rgba(255, 255, 255, 0.8);
+                --bg-sidebar: #0f172a;
+                --text-main: #0f172a;
+                --text-muted: #64748b;
+                --border-color: #e2e8f0;
+                --card-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05), 0 1px 2px -1px rgba(0, 0, 0, 0.05);
+                --sidebar-width: 260px;
+            }
+
+            [data-bs-theme="dark"] {
+                --bg-body: #090d16;
+                --bg-topbar: rgba(17, 24, 39, 0.8);
+                --bg-sidebar: #111827;
+                --text-main: #f8fafc;
+                --text-muted: #94a3b8;
+                --border-color: #1f2937;
+                --card-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3), 0 1px 2px -1px rgba(0, 0, 0, 0.3);
+            }
 
             * {
                 margin: 0;
@@ -31,485 +49,569 @@
             }
 
             body {
-                background: #f4f7fe;
-                font-family: 'Segoe UI', sans-serif;
+                background: var(--bg-body) !important;
+                color: var(--text-main);
+                font-family: 'Inter', system-ui, -apple-system, sans-serif;
                 overflow-x: hidden;
+                transition: background 0.25s ease, color 0.25s ease;
             }
 
-            /* =========================
-                       SIDEBAR
-                    ==========================*/
-
+            /* ==========================================
+                           SIDEBAR ARCHITECTURE
+                        ========================================== */
             .sidebar {
-                width: 260px;
+                width: var(--sidebar-width);
                 height: 100vh;
                 position: fixed;
                 left: 0;
                 top: 0;
-                background: linear-gradient(180deg, #111827, #1f2937);
-                color: white;
-                padding: 20px 0;
-                z-index: 1000;
+                background: var(--bg-sidebar);
+                color: #f8fafc;
+                padding: 24px 0;
+                z-index: 1010;
                 overflow-y: auto;
+                transition: width 0.25s cubic-bezier(0.4, 0, 0.2, 1);
             }
 
             .brand {
-                padding: 0 20px 20px;
-                border-bottom: 1px solid rgba(255,255,255,0.08);
+                padding: 0 24px 24px;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.06);
                 margin-bottom: 20px;
+                display: flex;
+                flex-direction: column;
+                gap: 4px;
             }
 
                 .brand h3 {
-                    font-size: 22px;
+                    font-size: 18px;
                     font-weight: 700;
                     margin: 0;
-                    color: white;
+                    letter-spacing: -0.5px;
+                    display: flex;
+                    align-items: center;
+                    gap: 10px;
                 }
 
                 .brand span {
-                    color: #9ca3af;
-                    font-size: 13px;
+                    color: #64748b;
+                    font-size: 12px;
+                    font-weight: 500;
+                    white-space: nowrap;
+                    transition: opacity 0.2s;
                 }
 
             .menu-title {
-                color: #9ca3af;
-                font-size: 12px;
+                color: #475569;
+                font-size: 11px;
+                font-weight: 700;
                 text-transform: uppercase;
-                padding: 10px 20px;
-                margin-top: 10px;
-                letter-spacing: 1px;
+                padding: 12px 24px 6px;
+                letter-spacing: 0.05em;
             }
 
             .sidebar a {
                 display: flex;
                 align-items: center;
                 gap: 12px;
-                color: #d1d5db;
+                color: #94a3b8;
                 text-decoration: none;
-                padding: 13px 20px;
-                margin: 6px 12px;
-                border-radius: 12px;
-                transition: 0.3s;
-                font-size: 15px;
+                padding: 10px 16px;
+                margin: 4px 16px;
+                border-radius: 8px;
+                transition: all 0.2s ease;
+                font-size: 14px;
                 font-weight: 500;
             }
 
                 .sidebar a:hover {
-                    background: rgba(255,255,255,0.08);
-                    color: white;
-                    transform: translateX(3px);
+                    background: rgba(255, 255, 255, 0.04);
+                    color: #f8fafc;
                 }
 
                 .sidebar a.active {
-                    background: linear-gradient(90deg, #2563eb, #3b82f6);
+                    background: #2563eb;
                     color: white;
-                    box-shadow: 0 4px 12px rgba(59,130,246,0.3);
+                    font-weight: 600;
+                    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
                 }
 
                 .sidebar a i {
-                    width: 22px;
+                    width: 20px;
                     text-align: center;
                     font-size: 16px;
                 }
 
-            /* =========================
-                       MAIN CONTENT
-                    ==========================*/
-
-            .main-content {
-                margin-left: 260px;
-                min-height: 100vh;
-                padding: 25px;
+            /* Collapsed Sidebar State */
+            body.sidebar-collapsed {
+                --sidebar-width: 78px;
             }
 
-            /* =========================
-                       TOPBAR
-                    ==========================*/
+                body.sidebar-collapsed .brand span,
+                body.sidebar-collapsed .menu-title,
+                body.sidebar-collapsed .menu-text {
+                    display: none !important;
+                }
 
+                body.sidebar-collapsed .brand h3 {
+                    justify-content: center;
+                }
+
+                body.sidebar-collapsed .sidebar a {
+                    justify-content: center;
+                    padding: 12px;
+                }
+
+            /* ==========================================
+                           MAIN WORKSPACE
+                        ========================================== */
+            .main-content {
+                margin-left: var(--sidebar-width);
+                min-height: 100vh;
+                padding: 32px;
+                transition: margin-left 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            }
+
+            /* Topbar Module */
             .topbar {
-                background: white;
-                border-radius: 18px;
+                background: var(--bg-topbar);
+                backdrop-filter: blur(12px);
+                -webkit-backdrop-filter: blur(12px);
+                border: 1px solid var(--border-color);
+                border-radius: 14px;
                 padding: 16px 24px;
-                margin-bottom: 25px;
+                margin-bottom: 32px;
                 display: flex;
                 align-items: center;
                 justify-content: space-between;
-                box-shadow: 0 2px 15px rgba(0,0,0,0.05);
+                box-shadow: var(--card-shadow);
             }
 
             .page-title h4 {
                 margin: 0;
-                font-size: 24px;
+                font-size: 20px;
                 font-weight: 700;
-                color: #111827;
+                letter-spacing: -0.5px;
             }
 
             .page-title span {
                 font-size: 13px;
-                color: #6b7280;
+                color: var(--text-muted);
             }
 
-            /* =========================
-                       USER DROPDOWN
-                    ==========================*/
-
+            /* Dropdowns & Navigation Controls */
             .user-dropdown .dropdown-toggle {
                 text-decoration: none;
-                color: #111827;
+                color: var(--text-main);
                 display: flex;
                 align-items: center;
                 gap: 12px;
                 font-weight: 600;
+                font-size: 14px;
             }
 
             .user-avatar {
-                width: 42px;
-                height: 42px;
-                background: linear-gradient(135deg, #2563eb, #3b82f6);
-                border-radius: 50%;
+                width: 36px;
+                height: 36px;
+                background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+                border-radius: 8px;
                 color: white;
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                font-size: 18px;
+                font-size: 14px;
+                font-weight: bold;
             }
 
             .dropdown-menu {
-                border: none;
-                border-radius: 14px;
-                padding: 10px;
-                box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+                border: 1px solid var(--border-color);
+                background: var(--bg-topbar);
+                backdrop-filter: blur(16px);
+                border-radius: 12px;
+                padding: 6px;
+                box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
             }
 
             .dropdown-item {
-                border-radius: 10px;
-                padding: 10px 14px;
-                font-size: 14px;
+                border-radius: 6px;
+                padding: 8px 12px;
+                font-size: 13.5px;
+                font-weight: 500;
+                color: var(--text-main);
             }
 
-                .dropdown-item:hover {
-                    background: #f3f4f6;
-                }
-
-            /* =========================
-                       CARDS
-                    ==========================*/
-
-            .dashboard-card {
-                border: none;
-                border-radius: 20px;
-                overflow: hidden;
-                box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            /* Data Containers */
+            .table-responsive {
+                background: var(--bg-topbar);
+                border: 1px solid var(--border-color);
+                box-shadow: var(--card-shadow);
             }
 
-            /* =========================
-                       TABLES
-                    ==========================*/
-
-            .table {
-                vertical-align: middle;
-            }
-
-                .table thead {
-                    background: #f9fafb;
-                }
-
-            /* =========================
-                       SCROLLBAR
-                    ==========================*/
-
+            /* Scrollbar styling */
             ::-webkit-scrollbar {
-                width: 8px;
+                width: 6px;
+                height: 6px;
+            }
+
+            ::-webkit-scrollbar-track {
+                background: transparent;
             }
 
             ::-webkit-scrollbar-thumb {
-                background: #d1d5db;
-                border-radius: 20px;
+                background: #cbd5e1;
+                border-radius: 10px;
             }
 
-            /* =========================
-                       MOBILE
-                    ==========================*/
+            [data-bs-theme="dark"] ::-webkit-scrollbar-thumb {
+                background: #334155;
+            }
 
+            /* Tablet Responsive Shifts */
             @@media(max-width: 992px) {
-
-                .sidebar {
-                    width: 85px;
+                body {
+                    --sidebar-width: 78px;
                 }
 
-                    .sidebar .menu-text,
-                    .brand span,
-                    .menu-title {
-                        display: none;
-                    }
-
-                .main-content {
-                    margin-left: 85px;
+                .brand span, .menu-title, .menu-text {
+                    display: none !important;
                 }
 
                 .brand h3 {
-                    text-align: center;
-                    font-size: 18px;
+                    justify-content: center;
                 }
 
                 .sidebar a {
                     justify-content: center;
+                    padding: 12px;
+                }
+
+                .main-content {
+                    margin-left: var(--sidebar-width);
+                    padding: 16px;
                 }
             }
-
-
-
     </style>
-
 </head>
 
 <body>
 
-    <!-- SIDEBAR -->
     <aside class="sidebar">
-
         <div class="brand">
             <h3>
-                <i class="fa-solid fa-building"></i>
-                HMS
+                <i class="fa-solid fa-shield-halved text-primary"></i>
+                <span class="text-white">HMS Portal</span>
             </h3>
-
-            <span>Hostel Management System</span>
+            <span>Management Infrastructure</span>
         </div>
 
-        <div class="menu-title">Main Menu</div>
+        <div class="menu-title">Core Operations</div>
 
-        <a asp-controller="Dashboard"
-           asp-action="Index"
-           class="@(currentController == "Dashboard" ? "active" : "")">
-
-            <i class="fa-solid fa-chart-line"></i>
+        <a asp-controller="Dashboard" asp-action="Index" class="@(currentController == "Dashboard" ? "active" : "")">
+            <i class="fa-solid fa-chart-pie"></i>
             <span class="menu-text">Dashboard</span>
         </a>
 
-        <a asp-controller="Students"
-           asp-action="Index"
-           class="@(currentController == "Students" ? "active" : "")">
-
-            <i class="fa-solid fa-user-graduate"></i>
+        <a asp-controller="Students" asp-action="Index" class="@(currentController == "Students" ? "active" : "")">
+            <i class="fa-solid fa-id-card"></i>
             <span class="menu-text">Students</span>
         </a>
 
-        <a asp-controller="Hostels"
-           asp-action="Index"
-           class="@(currentController == "Hostels" ? "active" : "")">
-
-            <i class="fa-solid fa-building"></i>
+        <a asp-controller="Hostels" asp-action="Index" class="@(currentController == "Hostels" ? "active" : "")">
+            <i class="fa-solid fa-hotel"></i>
             <span class="menu-text">Hostels</span>
         </a>
 
-        <a asp-controller="Rooms"
-           asp-action="Index"
-           class="@(currentController == "Rooms" ? "active" : "")">
-
-            <i class="fa-solid fa-bed"></i>
+        <a asp-controller="Rooms" asp-action="Index" class="@(currentController == "Rooms" ? "active" : "")">
+            <i class="fa-solid fa-door-open"></i>
             <span class="menu-text">Rooms</span>
         </a>
 
-        <a asp-controller="Beds"
-           asp-action="Index"
-           class="@(currentController == "Beds" ? "active" : "")">
-
-            <i class="fa-solid fa-bed-pulse"></i>
+        <a asp-controller="Beds" asp-action="Index" class="@(currentController == "Beds" ? "active" : "")">
+            <i class="fa-solid fa-bed"></i>
             <span class="menu-text">Beds</span>
         </a>
 
-        <a asp-controller="Allocations"
-           asp-action="Index"
-           class="@(currentController == "Allocations" ? "active" : "")">
+        <div class="menu-title">Administration</div>
 
-            <i class="fa-solid fa-handshake"></i>
+        <a asp-controller="Allocations" asp-action="Index" class="@(currentController == "Allocations" ? "active" : "")">
+            <i class="fa-solid fa-clipboard-check"></i>
             <span class="menu-text">Allocations</span>
         </a>
 
-        <a asp-controller="Payments"
-           asp-action="Index"
-           class="@(currentController == "Payments" ? "active" : "")">
-
-            <i class="fa-solid fa-money-bill-wave"></i>
+        <a asp-controller="Payments" asp-action="Index" class="@(currentController == "Payments" ? "active" : "")">
+            <i class="fa-solid fa-wallet"></i>
             <span class="menu-text">Payments</span>
         </a>
 
-        <a asp-controller="Complaints"
-           asp-action="Index"
-           class="@(currentController == "Complaints" ? "active" : "")">
-
-            <i class="fa-solid fa-circle-exclamation"></i>
+        <a asp-controller="Complaints" asp-action="Index" class="@(currentController == "Complaints" ? "active" : "")">
+            <i class="fa-solid fa-triangle-exclamation"></i>
             <span class="menu-text">Complaints</span>
         </a>
 
-        <a asp-controller="Visitors"
-           asp-action="Index"
-           class="@(currentController == "Visitors" ? "active" : "")">
-
-            <i class="fa-solid fa-users"></i>
+        <a asp-controller="Visitors" asp-action="Index" class="@(currentController == "Visitors" ? "active" : "")">
+            <i class="fa-solid fa-user-group"></i>
             <span class="menu-text">Visitors</span>
         </a>
 
-        <a asp-controller="Staffs"
-           asp-action="Index"
-           class="@(currentController == "Staffs" ? "active" : "")">
-
-            <i class="fa-solid fa-user-tie"></i>
-            <span class="menu-text">Staff</span>
+        <a asp-controller="Staffs" asp-action="Index" class="@(currentController == "Staffs" ? "active" : "")">
+            <i class="fa-solid fa-user-gear"></i>
+            <span class="menu-text">Staff System</span>
         </a>
 
-        <a asp-controller="Notices"
-           asp-action="Index"
-           class="@(currentController == "Notices" ? "active" : "")">
-
-            <i class="fa-solid fa-bell"></i>
+        <a asp-controller="Notices" asp-action="Index" class="@(currentController == "Notices" ? "active" : "")">
+            <i class="fa-solid fa-bullhorn"></i>
             <span class="menu-text">Notices</span>
         </a>
-
     </aside>
 
-    <!-- MAIN -->
     <main class="main-content">
 
-        <!-- TOPBAR -->
         <div class="topbar">
-
-            <div class="page-title">
-                <h4>@ViewData["Title"]</h4>
-                <span>Hostel Management Administration Panel</span>
+            <div class="d-flex align-items-center gap-3">
+                <button id="sidebarToggle" class="btn btn-light border d-none d-lg-flex align-items-center justify-content-center" style="width: 38px; height: 38px; border-radius: 8px;">
+                    <i class="fa-solid fa-bars-staggered"></i>
+                </button>
+                <div class="page-title">
+                    <h4 class="mb-0">@ViewData["Title"]</h4>
+                    <span class="d-none d-sm-inline">System Engine Workspace</span>
+                </div>
             </div>
 
-            <!-- USER -->
-            <div class="dropdown user-dropdown">
-
-                <a class="dropdown-toggle"
-                   href="#"
-                   data-bs-toggle="dropdown">
-
-                    <div class="user-avatar">
-                        <i class="fa-solid fa-user"></i>
-                    </div>
-
-                    <div>
-                        <div style="font-size:14px;">
-                            @(currentUser?.FullName ?? "Admin")
+            <div class="d-flex align-items-center">
+                <div class="dropdown user-dropdown">
+                    <a class="dropdown-toggle" href="#" data-bs-toggle="dropdown">
+                        <div class="user-avatar">
+                            @((currentUser?.FullName ?? "A").Substring(0, 1).ToUpper())
                         </div>
+                        <div class="d-none d-md-block text-start">
+                            <div class="lh-1">@(currentUser?.FullName ?? "System Administrator")</div>
+                            <small class="text-muted" style="font-size: 11px;">Admin Console</small>
+                        </div>
+                    </a>
 
-                        <small class="text-muted">
-                            Administrator
-                        </small>
-                    </div>
-
-                </a>
-
-                <ul class="dropdown-menu dropdown-menu-end">
-
-                    <li>
-                        <a class="dropdown-item"
-                           asp-controller="Admin"
-                           asp-action="Profile">
-
-                            <i class="fa-solid fa-user me-2"></i>
-                            My Profile
-                        </a>
-                    </li>
-
-                    <li>
-                        <hr class="dropdown-divider" />
-                    </li>
-
-                    <li>
-                        <a class="dropdown-item text-danger"
-                           asp-controller="Account"
-                           asp-action="Logout">
-
-                            <i class="fa-solid fa-right-from-bracket me-2"></i>
-                            Logout
-                        </a>
-                    </li>
-
-                </ul>
-
+                    <ul class="dropdown-menu dropdown-menu-end shadow-lg">
+                        <li>
+                            <a class="dropdown-item" asp-controller="Admin" asp-action="Profile">
+                                <i class="fa-regular fa-circle-user me-2"></i> User Profile
+                            </a>
+                        </li>
+                        <li><hr class="dropdown-divider" /></li>
+                        <li>
+                            <a class="dropdown-item text-danger" asp-controller="Account" asp-action="Logout">
+                                <i class="fa-solid fa-arrow-right-from-bracket me-2"></i> Terminate Session
+                            </a>
+                        </li>
+                    </ul>
+                </div>
             </div>
-
         </div>
 
-        <!-- PAGE CONTENT -->
-        @RenderBody()
+        <div class="fade-in-content">
+            @RenderBody()
+        </div>
 
     </main>
 
-    <!-- Bootstrap -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
     <script>
         document.addEventListener("DOMContentLoaded", function () {
 
+        // ==========================================
+        // 1. COLLAPSIBLE SIDEBAR DESKTOP HANDLER
+        // ==========================================
+        const sidebarBtn = document.getElementById("sidebarToggle");
+        if (sidebarBtn) {
+        if (localStorage.getItem("sidebar-collapsed") === "true") {
+        document.body.classList.add("sidebar-collapsed");
+        }
+        sidebarBtn.addEventListener("click", function () {
+        document.body.classList.toggle("sidebar-collapsed");
+        localStorage.setItem("sidebar-collapsed", document.body.classList.contains("sidebar-collapsed"));
+        });
+        }
+
+        // ==========================================
+        // 2. THEME CONTROLLER MODULE (LIGHT / DARK)
+        // ==========================================
+        const htmlElement = document.documentElement;
+        const savedTheme = localStorage.getItem("theme");
+        const systemPrefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+        const initialTheme = savedTheme || (systemPrefersDark ? "dark" : "light");
+
+        htmlElement.setAttribute("data-bs-theme", initialTheme);
+
+        const themeToggleBtn = document.createElement("button");
+        themeToggleBtn.className = "btn btn-light border me-3 d-flex align-items-center justify-content-center";
+        themeToggleBtn.style.width = "38px";
+        themeToggleBtn.style.height = "38px";
+        themeToggleBtn.style.borderRadius = "8px";
+        themeToggleBtn.setAttribute("title", "Change Interface Color Engine");
+
+        themeToggleBtn.innerHTML = initialTheme === "dark"
+        ? '<i class="fa-solid fa-sun text-warning fs-5"></i>'
+        : '<i class="fa-solid fa-moon text-slate fs-5"></i>';
+
+        const userDropdown = document.querySelector(".user-dropdown");
+        if (userDropdown) {
+        userDropdown.parentNode.insertBefore(themeToggleBtn, userDropdown);
+        }
+
+        themeToggleBtn.addEventListener("click", function () {
+        const currentTheme = htmlElement.getAttribute("data-bs-theme");
+        const newTheme = currentTheme === "dark" ? "light" : "dark";
+
+        htmlElement.setAttribute("data-bs-theme", newTheme);
+        localStorage.setItem("theme", newTheme);
+
+        themeToggleBtn.innerHTML = newTheme === "dark"
+        ? '<i class="fa-solid fa-sun text-warning fs-5"></i>'
+        : '<i class="fa-solid fa-moon text-slate fs-5"></i>';
+        });
+
+        // ==========================================
+        // 3. ENTERPRISE TABLES, FILTERS & HOOKS
+        // ==========================================
         document.querySelectorAll("table.table").forEach(function (table) {
+        table.className = "table table-hover align-middle mb-0 text-nowrap";
 
-        // avoid double wrapping
-        if (table.closest(".table-responsive")) return;
-
-        // create wrapper
+        if (!table.closest(".table-responsive")) {
         const wrapper = document.createElement("div");
-        wrapper.classList.add("table-responsive");
-
-        // insert wrapper before table
+        wrapper.className = "table-responsive rounded-4 border shadow-sm mb-4";
         table.parentNode.insertBefore(wrapper, table);
-
-        // move table inside wrapper
         wrapper.appendChild(table);
+
+        // INSTANT LIVE IN-MEMORY GLOBAL ROW SEARCH ELEMENT INJECTION
+        const searchBoxContainer = document.createElement("div");
+        searchBoxContainer.className = "d-flex justify-content-end mb-3";
+        searchBoxContainer.innerHTML = `
+        <div class="input-group" style="max-width: 320px;">
+        <span class="input-group-text bg-transparent border-end-0 text-muted"><i class="fa-solid fa-magnifying-glass fs-7"></i></span>
+        <input type="text" class="form-control form-control-sm border-start-0 ps-0" placeholder="Filter data matrix dynamically...">
+        </div>
+        `;
+        wrapper.parentNode.insertBefore(searchBoxContainer, wrapper);
+
+        // LIVE FILTER: Isolates searches from looking inside action buttons to prevent layout breakages
+        searchBoxContainer.querySelector("input").addEventListener("keyup", function (e) {
+        const val = e.target.value.toLowerCase().trim();
+
+        table.querySelectorAll("tbody tr").forEach(row => {
+        let matchFound = false;
+
+        // Scan only real data columns; skip the final action control column
+        for (let i = 0; i < row.cells.length - 1; i++) {
+        const cellText = row.cells[i].textContent.toLowerCase();
+        if (cellText.includes(val)) {
+        matchFound = true;
+        break;
+        }
+        }
+        row.style.display = matchFound ? "" : "none";
+        });
+        });
+        }
+
+        const thead = table.querySelector("thead");
+        if (thead) {
+        thead.className = "table-light border-bottom text-uppercase tracking-wider";
+        thead.style.fontSize = "11px";
+        thead.style.fontWeight = "700";
+        }
+
+        // C# Identity & Domain Model Enum Lookups
+        table.querySelectorAll("td").forEach(function (cell) {
+        const cellText = cell.textContent.trim();
+        const lowText = cellText.toLowerCase();
+
+        const statusStyles = {
+        "active": "bg-success-subtle text-success border border-success-subtle",
+        "available": "bg-success-subtle text-success border border-success-subtle",
+        "occupied": "bg-primary-subtle text-primary border border-primary-subtle",
+        "completed": "bg-info-subtle text-info border border-info-subtle",
+        "reserved": "bg-warning-subtle text-warning border border-warning-subtle",
+        "maintenance": "bg-danger-subtle text-danger border border-danger-subtle",
+        "cancelled": "bg-secondary-subtle text-secondary border border-secondary-subtle",
+
+        "pending": "bg-warning-subtle text-warning border border-warning-subtle",
+        "inprogress": "bg-primary-subtle text-primary border border-primary-subtle",
+        "resolved": "bg-success-subtle text-success border border-success-subtle",
+
+        "paid": "bg-success-subtle text-success border border-success-subtle",
+        "partial": "bg-warning-subtle text-warning border border-warning-subtle",
+        "unpaid": "bg-danger-subtle text-danger border border-danger-subtle",
+        "inactive": "bg-danger-subtle text-danger border border-danger-subtle"
+        };
+
+        if (statusStyles[lowText]) {
+        cell.innerHTML = `<span class="badge rounded-pill px-2.5 py-1.5 fw-semibold ${statusStyles[lowText]}">${cellText}</span>`;
+        }
         });
 
-        });
-    </script>
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
+        // Row action items grouping layouts
+        table.querySelectorAll("tbody tr").forEach(function (row) {
+        const lastCell = row.cells[row.cells.length - 1];
+        if (lastCell && lastCell.querySelectorAll("a").length > 0) {
+        const btnGroup = document.createElement("div");
+        btnGroup.className = "btn-group bg-light p-0.5 rounded-2 border";
 
+        const links = Array.from(lastCell.querySelectorAll("a"));
+        links.forEach(function (a) { btnGroup.appendChild(a); });
+
+        lastCell.innerHTML = "";
+        lastCell.appendChild(btnGroup);
+        lastCell.classList.add("text-end");
+        }
+        });
+        });
+
+        // ==========================================
+        // 4. TRANSFORM SCRUD SELECTIONS INTO UTILITY ICON TOGGLES
+        // ==========================================
         document.querySelectorAll("a").forEach(function (a) {
-
         const text = a.textContent.trim().toLowerCase();
 
-        // CREATE NEW
         if (text === "create new") {
-        a.classList.add("btn", "btn-primary", "btn-sm");
+        a.className = "btn btn-primary btn-sm px-3 fw-semibold shadow-sm mb-3";
+        a.innerHTML = '<i class="fa-solid fa-plus me-1.5 fs-7"></i> Create New Ledger';
         }
-
-        // EDIT
         else if (text === "edit") {
-        a.classList.add("btn", "btn-outline-primary", "btn-sm");
+        a.className = "btn btn-link link-dark text-decoration-none px-2 py-1 fs-7";
+        a.innerHTML = '<i class="fa-solid fa-user-pen text-primary" title="Modify Record"></i>';
         }
-
-        // DETAILS
         else if (text === "details") {
-        a.classList.add("btn", "btn-outline-info", "btn-sm");
+        a.className = "btn btn-link link-dark text-decoration-none px-2 py-1 fs-7";
+        a.innerHTML = '<i class="fa-solid fa-circle-info text-info" title="Inspect Record"></i>';
         }
-
-        // DELETE
         else if (text === "delete") {
-        a.classList.add("btn", "btn-outline-danger", "btn-sm");
+        a.className = "btn btn-link link-dark text-decoration-none px-2 py-1 fs-7";
+        a.innerHTML = '<i class="fa-solid fa-trash-can text-danger" title="Purge Record"></i>';
         }
-
-        // BACK TO LIST
         else if (text === "back to list") {
-        a.classList.add("btn", "btn-secondary", "btn-sm");
+        a.className = "btn btn-light border btn-sm fw-medium mt-3";
+        a.innerHTML = '<i class="fa-solid fa-chevron-left me-1.5"></i> Return to Console';
         }
+        });
 
+        // ==========================================
+        // 5. DATA FIELD FORM RE-ENGINEERING
+        // ==========================================
+        document.querySelectorAll("input:not([type='submit']):not([type='checkbox']):not([type='radio']), select, textarea").forEach(function (input) {
+        input.className = "form-control form-control-sm rounded-3";
+        const parent = input.parentElement;
+        if (parent && (parent.classList.contains("form-group") || parent.tagName === "DIV")) {
+        parent.classList.add("mb-3");
+        }
+        });
+
+        document.querySelectorAll("input[type='submit']").forEach(function (btn) {
+        if (btn.classList.contains("btn-primary") || btn.value.toLowerCase().includes("save") || btn.value.toLowerCase().includes("create")) {
+        btn.className = "btn btn-primary btn-sm px-4 fw-semibold shadow-sm";
+        }
         });
 
         });
     </script>
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
 
-        document.querySelectorAll("table.table").forEach(function (table) {
-
-        table.classList.add("table-striped");
-
-        });
-
-        });
-    </script>
     @RenderSection("Scripts", required: false)
 
 </body>
