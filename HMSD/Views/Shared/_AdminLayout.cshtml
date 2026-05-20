@@ -859,7 +859,12 @@
         }
         }
     </script>
+    <script>
+        const element = document.querySelector('.col-md-4');
 
+        // Remove a single class
+        element.classList.remove('col-md-4');
+    </script>
     @RenderSection("Scripts", required: false)
 
 </body>
