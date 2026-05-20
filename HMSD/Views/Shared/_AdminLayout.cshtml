@@ -6,6 +6,10 @@
 @{
     var currentUser = await UserManager.GetUserAsync(User);
     var currentController = ViewContext.RouteData.Values["controller"]?.ToString();
+    var currentAction = ViewContext.RouteData.Values["action"]?.ToString() ?? "Index";
+
+    // Determine if the active route is a processing layout (Create/Edit/Delete/Details view)
+    bool isFormView = currentAction == "Create" || currentAction == "Edit" || currentAction == "Delete" || currentAction == "Details";
 }
 
 <!DOCTYPE html>
@@ -57,8 +61,8 @@
             }
 
             /* ==========================================
-                           SIDEBAR ARCHITECTURE
-                        ========================================== */
+                                    SIDEBAR ARCHITECTURE
+                       ========================================== */
             .sidebar {
                 width: var(--sidebar-width);
                 height: 100vh;
@@ -162,8 +166,8 @@
                 }
 
             /* ==========================================
-                           MAIN WORKSPACE
-                        ========================================== */
+                                    MAIN WORKSPACE
+                       ========================================== */
             .main-content {
                 margin-left: var(--sidebar-width);
                 min-height: 100vh;
@@ -239,11 +243,48 @@
                 color: var(--text-main);
             }
 
-            /* Data Containers */
+            /* Data Containers - Strict Rectangular System */
             .table-responsive {
                 background: var(--bg-topbar);
                 border: 1px solid var(--border-color);
                 box-shadow: var(--card-shadow);
+                border-radius: 0 !important; /* Forces flat geometric sharpness */
+            }
+
+            table.table {
+                border-radius: 0 !important;
+            }
+
+            /* ==========================================
+                              DYNAMIC ADVANCED INPUT SYSTEM
+                       ========================================== */
+            .form-engine-card {
+                background: var(--bg-topbar);
+                border: 1px solid var(--border-color);
+                box-shadow: var(--card-shadow);
+                padding: 32px;
+                margin-top: 10px;
+            }
+
+            .form-label {
+                font-size: 12.5px;
+                font-weight: 600;
+                text-transform: uppercase;
+                letter-spacing: 0.03em;
+                color: var(--text-muted);
+                margin-bottom: 6px;
+            }
+
+            .form-control:focus, .form-select:focus {
+                border-color: #2563eb !important;
+                box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15) !important;
+            }
+
+            .text-danger.field-validation-error {
+                font-size: 12px;
+                font-weight: 500;
+                margin-top: 4px;
+                display: block;
             }
 
             /* Scrollbar styling */
@@ -288,6 +329,51 @@
                     margin-left: var(--sidebar-width);
                     padding: 16px;
                 }
+            }
+
+            .form-engine-card {
+                background: var(--bg-topbar);
+                border: 1px solid var(--border-color);
+                box-shadow: var(--card-shadow);
+                padding: 40px; /* Increased padding for breathing room */
+                margin-top: 10px;
+                border-radius: 12px;
+            }
+
+                .form-engine-card form .row {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 1.5rem; /* Better spacing between fields */
+                }
+
+            /* Force all form elements to be full width */
+            .form-group, .col-12, .col-md-6 {
+                width: 100% !important;
+                max-width: 100% !important;
+                flex: 0 0 100% !important;
+                margin-bottom: 0 !important;
+            }
+
+            .form-control, .form-select {
+                width: 100% !important;
+                padding: 0.65rem 0.75rem !important;
+            }
+
+            .form-label {
+                font-size: 13px !important;
+                font-weight: 600 !important;
+                text-transform: uppercase;
+                color: var(--text-muted);
+                margin-bottom: 8px !important;
+            }
+
+            .action-row {
+                width: 100%;
+                margin-top: 20px;
+                padding-top: 20px;
+                border-top: 1px solid var(--border-color);
+                display: flex;
+                gap: 10px;
             }
     </style>
 </head>
@@ -405,9 +491,22 @@
             </div>
         </div>
 
-        <div class="fade-in-content">
-            @RenderBody()
-        </div>
+        @if (isFormView)
+        {
+            <div class="row justify-content-center">
+                <div class="col-12 col-xl-10">
+                    <div class="form-engine-card">
+                        @RenderBody()
+                    </div>
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="fade-in-content">
+                @RenderBody()
+            </div>
+        }
 
     </main>
 
@@ -469,46 +568,121 @@
         });
 
         // ==========================================
-        // 3. ENTERPRISE TABLES, FILTERS & HOOKS
+        // 3. HIGH PERFORMANCE PAGINATION & TABLE ENGINE
         // ==========================================
+        const ROWS_PER_PAGE = 10;
+
         document.querySelectorAll("table.table").forEach(function (table) {
         table.className = "table table-hover align-middle mb-0 text-nowrap";
 
         if (!table.closest(".table-responsive")) {
         const wrapper = document.createElement("div");
-        wrapper.className = "table-responsive rounded-4 border shadow-sm mb-4";
+        wrapper.className = "table-responsive border shadow-sm mb-4"; // Stripped rounded-4 curvature
         table.parentNode.insertBefore(wrapper, table);
         wrapper.appendChild(table);
 
-        // INSTANT LIVE IN-MEMORY GLOBAL ROW SEARCH ELEMENT INJECTION
-        const searchBoxContainer = document.createElement("div");
-        searchBoxContainer.className = "d-flex justify-content-end mb-3";
-        searchBoxContainer.innerHTML = `
+        // CONTROLS HEADER BAR (Search Box Alignment)
+        const controlHeader = document.createElement("div");
+        controlHeader.className = "d-flex justify-content-end mb-3";
+        controlHeader.innerHTML = `
         <div class="input-group" style="max-width: 320px;">
         <span class="input-group-text bg-transparent border-end-0 text-muted"><i class="fa-solid fa-magnifying-glass fs-7"></i></span>
-        <input type="text" class="form-control form-control-sm border-start-0 ps-0" placeholder="Filter data matrix dynamically...">
+        <input type="text" class="form-control form-control-sm border-start-0 ps-0" placeholder="Search data grid...">
         </div>
         `;
-        wrapper.parentNode.insertBefore(searchBoxContainer, wrapper);
+        wrapper.parentNode.insertBefore(controlHeader, wrapper);
 
-        // LIVE FILTER: Isolates searches from looking inside action buttons to prevent layout breakages
-        searchBoxContainer.querySelector("input").addEventListener("keyup", function (e) {
+        // PAGINATION FOOTER SYSTEM INJECTION
+        const paginationFooter = document.createElement("div");
+        paginationFooter.className = "d-flex justify-content-between align-items-center mt-3 px-1";
+        paginationFooter.innerHTML = `
+        <div class="text-muted small paginator-info">Showing data range...</div>
+        <nav>
+        <ul class="pagination pagination-sm mb-0 custom-pagination-nodes gap-1"></ul>
+        </nav>
+        `;
+        wrapper.parentNode.insertBefore(paginationFooter, wrapper.nextSibling);
+
+        let activePage = 1;
+        let currentFilteredRows = Array.from(table.querySelectorAll("tbody tr"));
+
+        function renderPaginationControls() {
+        const totalRows = currentFilteredRows.length;
+        const totalPages = Math.ceil(totalRows / ROWS_PER_PAGE) || 1;
+        const paginatorContainer = paginationFooter.querySelector(".custom-pagination-nodes");
+        const infoLabel = paginationFooter.querySelector(".paginator-info");
+
+        paginatorContainer.innerHTML = "";
+
+        if (activePage > totalPages) activePage = totalPages;
+
+        // Info description layout calculations
+        const startIdx = totalRows === 0 ? 0 : (activePage - 1) * ROWS_PER_PAGE + 1;
+        const endIdx = Math.min(activePage * ROWS_PER_PAGE, totalRows);
+        infoLabel.textContent = `Showing ${startIdx} to ${endIdx} of ${totalRows} absolute entries`;
+
+        if (totalPages <= 1) {
+        paginationFooter.classList.add("d-none");
+        return;
+        }
+        paginationFooter.classList.remove("d-none");
+
+        // Previous Node Link
+        const prevLi = document.createElement("li");
+        prevLi.className = `page-item ${activePage === 1 ? "disabled" : ""}`;
+        prevLi.innerHTML = `<button class="page-link border rounded-2 px-2.5" type="button"><i class="fa-solid fa-angle-left"></i></button>`;
+        prevLi.addEventListener("click", () => { if(activePage > 1) { activePage--; updateGridDisplay(); } });
+        paginatorContainer.appendChild(prevLi);
+
+        // Numeric Link Matrices
+        for (let i = 1; i <= totalPages; i++) {
+        const li = document.createElement("li");
+        li.className = `page-item ${activePage === i ? "active" : ""}`;
+        li.innerHTML = `<button class="page-link border rounded-2 px-3 fw-medium ${activePage === i ? "bg-primary text-white" : "text-dark bg-light"}">${i}</button>`;
+        li.addEventListener("click", () => { activePage = i; updateGridDisplay(); });
+        paginatorContainer.appendChild(li);
+        }
+
+        // Next Node Link
+        const nextLi = document.createElement("li");
+        nextLi.className = `page-item ${activePage === totalPages ? "disabled" : ""}`;
+        nextLi.innerHTML = `<button class="page-link border rounded-2 px-2.5" type="button"><i class="fa-solid fa-angle-right"></i></button>`;
+        nextLi.addEventListener("click", () => { if(activePage < totalPages) { activePage++; updateGridDisplay(); } });
+        paginatorContainer.appendChild(nextLi);
+        }
+
+        function updateGridDisplay() {
+        const allRows = table.querySelectorAll("tbody tr");
+        allRows.forEach(r => r.style.display = "none");
+
+        const start = (activePage - 1) * ROWS_PER_PAGE;
+        const end = start + ROWS_PER_PAGE;
+
+        currentFilteredRows.slice(start, end).forEach(r => r.style.display = "");
+        renderPaginationControls();
+        }
+
+        // SEARCH ENGINE CONNECTED INTEGRATION
+        controlHeader.querySelector("input").addEventListener("input", function (e) {
         const val = e.target.value.toLowerCase().trim();
+        const allRows = Array.from(table.querySelectorAll("tbody tr"));
 
-        table.querySelectorAll("tbody tr").forEach(row => {
-        let matchFound = false;
-
-        // Scan only real data columns; skip the final action control column
+        if (val === "") {
+        currentFilteredRows = allRows;
+        } else {
+        currentFilteredRows = allRows.filter(row => {
         for (let i = 0; i < row.cells.length - 1; i++) {
-        const cellText = row.cells[i].textContent.toLowerCase();
-        if (cellText.includes(val)) {
-        matchFound = true;
-        break;
+        if (row.cells[i].textContent.toLowerCase().includes(val)) return true;
         }
+        return false;
+        });
         }
-        row.style.display = matchFound ? "" : "none";
+        activePage = 1;
+        updateGridDisplay();
         });
-        });
+
+        // Init Display State Engine
+        updateGridDisplay();
         }
 
         const thead = table.querySelector("thead");
@@ -518,7 +692,7 @@
         thead.style.fontWeight = "700";
         }
 
-        // C# Identity & Domain Model Enum Lookups
+        // Status Badging Lookup Mapper
         table.querySelectorAll("td").forEach(function (cell) {
         const cellText = cell.textContent.trim();
         const lowText = cellText.toLowerCase();
@@ -531,11 +705,9 @@
         "reserved": "bg-warning-subtle text-warning border border-warning-subtle",
         "maintenance": "bg-danger-subtle text-danger border border-danger-subtle",
         "cancelled": "bg-secondary-subtle text-secondary border border-secondary-subtle",
-
         "pending": "bg-warning-subtle text-warning border border-warning-subtle",
         "inprogress": "bg-primary-subtle text-primary border border-primary-subtle",
         "resolved": "bg-success-subtle text-success border border-success-subtle",
-
         "paid": "bg-success-subtle text-success border border-success-subtle",
         "partial": "bg-warning-subtle text-warning border border-warning-subtle",
         "unpaid": "bg-danger-subtle text-danger border border-danger-subtle",
@@ -547,7 +719,7 @@
         }
         });
 
-        // Row action items grouping layouts
+        // Action Row Optimization grouping rules
         table.querySelectorAll("tbody tr").forEach(function (row) {
         const lastCell = row.cells[row.cells.length - 1];
         if (lastCell && lastCell.querySelectorAll("a").length > 0) {
@@ -593,23 +765,101 @@
         });
 
         // ==========================================
-        // 5. DATA FIELD FORM RE-ENGINEERING
+        // 5. DATA FIELD FORM RE-ENGINEERING (Create / Edit View Optimization)
         // ==========================================
-        document.querySelectorAll("input:not([type='submit']):not([type='checkbox']):not([type='radio']), select, textarea").forEach(function (input) {
-        input.className = "form-control form-control-sm rounded-3";
-        const parent = input.parentElement;
-        if (parent && (parent.classList.contains("form-group") || parent.tagName === "DIV")) {
-        parent.classList.add("mb-3");
+        const form = document.querySelector(".form-engine-card form");
+        if (form) {
+        // Re-map row container to force grid design structure for scaffolding layout
+        let rowWrapper = form.querySelector(".row");
+        if (!rowWrapper) {
+        rowWrapper = document.createElement("div");
+        rowWrapper.className = "row g-3";
+
+        const formGroups = Array.from(form.querySelectorAll(".form-group, div[class*='mb-']"));
+        if(formGroups.length > 0) {
+        formGroups[0].parentNode.insertBefore(rowWrapper, formGroups[0]);
+        formGroups.forEach(group => {
+        if(!group.querySelector("input[type='submit']")) {
+        rowWrapper.appendChild(group);
+        }
+        });
+        }
+        } else {
+        rowWrapper.classList.add("g-3");
+        }
+
+        // Uniformly format inputs and split fields into highly-scannable 2-column configurations
+        form.querySelectorAll("input:not([type='submit']):not([type='checkbox']):not([type='radio']), select, textarea").forEach(function (input) {
+        input.className = "form-control form-control-sm rounded-2";
+
+        const group = input.closest(".form-group") || input.parentElement;
+        if (group && !group.classList.contains("col-md-6") && !group.classList.contains("col-12")) {
+        group.className = "col-12 col-md-6 mb-2";
+        }
+
+        // Map labels above inputs beautifully
+        const label = group.querySelector("label");
+        if (label) {
+        label.className = "form-label";
         }
         });
 
-        document.querySelectorAll("input[type='submit']").forEach(function (btn) {
-        if (btn.classList.contains("btn-primary") || btn.value.toLowerCase().includes("save") || btn.value.toLowerCase().includes("create")) {
-        btn.className = "btn btn-primary btn-sm px-4 fw-semibold shadow-sm";
+        // Isolate action execution buttons into clean bottom positioning rows
+        const submitBtn = form.querySelector("input[type='submit'], button[type='submit']");
+        if (submitBtn) {
+        submitBtn.className = "btn btn-primary btn-sm px-4 fw-semibold shadow-sm";
+
+        const actionContainer = document.createElement("div");
+        actionContainer.className = "col-12 d-flex justify-content-start gap-2 mt-4 pt-3 border-top";
+
+        submitBtn.parentNode.insertBefore(actionContainer, submitBtn);
+        actionContainer.appendChild(submitBtn);
+
+        // Pull back-to-list navigation elements right next to the save execution buttons
+        const backBtn = document.querySelector(".form-engine-card a.btn-light");
+        if (backBtn) {
+        backBtn.classList.remove("mt-3");
+        actionContainer.appendChild(backBtn);
         }
-        });
+        }
+        }
 
         });
+    </script>
+
+    <script>
+        // ... (Keep existing code) ...
+
+        // 5. DATA FIELD FORM RE-ENGINEERING (Full-Width Logic)
+        const form = document.querySelector(".form-engine-card form");
+        if (form) {
+        // Remove existing grid classes to prevent conflicts
+        form.querySelectorAll(".col-md-6").forEach(el => el.classList.remove("col-md-6"));
+
+        form.querySelectorAll("input:not([type='submit']), select, textarea").forEach(function (input) {
+        input.classList.add("form-control-sm");
+        const group = input.closest(".form-group") || input.parentElement;
+        if (group) group.classList.add("col-12");
+        });
+
+        // Ensure buttons are in a clean row
+        const submitBtn = form.querySelector("input[type='submit'], button[type='submit']");
+        if (submitBtn && !form.querySelector(".action-row")) {
+        const actionContainer = document.createElement("div");
+        actionContainer.className = "action-row";
+        submitBtn.className = "btn btn-primary px-4 fw-semibold shadow-sm";
+
+        form.appendChild(actionContainer);
+        actionContainer.appendChild(submitBtn);
+
+        // Add back button to action row if exists
+        const backBtn = document.querySelector(".form-engine-card a.btn-light");
+        if (backBtn) {
+        backBtn.className = "btn btn-outline-secondary px-4";
+        actionContainer.appendChild(backBtn);
+        }
+        }
+        }
     </script>
 
     @RenderSection("Scripts", required: false)
