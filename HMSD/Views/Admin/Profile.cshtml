@@ -1,0 +1,67 @@
+﻿@model HMSD.Data.ApplicationUser
+
+@{
+    ViewData["Title"] = "Admin Profile";
+}
+
+<div class="container-fluid">
+
+    <div class="row">
+        <div class="col-md-8 mx-auto">
+
+            <div class="card shadow border-0">
+
+                <div class="card-header bg-dark text-white">
+                    <h4 class="mb-0">
+                        <i class="bi bi-person-circle"></i>
+                        Admin Profile
+                    </h4>
+                </div>
+
+                <div class="card-body">
+
+                    @if (ViewBag.Success != null)
+                    {
+                        <div class="alert alert-success">
+                            @ViewBag.Success
+                        </div>
+                    }
+
+                    <form method="post">
+
+                        <div class="mb-3">
+                            <label class="form-label">Full Name</label>
+
+                            <input asp-for="FullName"
+                                   class="form-control" />
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Email</label>
+
+                            <input asp-for="Email"
+                                   class="form-control" />
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Phone Number</label>
+
+                            <input asp-for="PhoneNumber"
+                                   class="form-control" />
+                        </div>
+
+                        <button class="btn btn-primary">
+                            <i class="bi bi-save"></i>
+                            Update Profile
+                        </button>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+</div>
