@@ -1,79 +1,181 @@
 @model HMSD.Data.Room
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Edit Room";
 }
 
-<h1>Edit</h1>
+<div class="container py-4">
 
-<h4>Room</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="HostelId" class="control-label"></label>
-                <select asp-for="HostelId" class="form-control" asp-items="ViewBag.HostelId"></select>
-                <span asp-validation-for="HostelId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="FloorId" class="control-label"></label>
-                <select asp-for="FloorId" class="form-control" asp-items="ViewBag.FloorId"></select>
-                <span asp-validation-for="FloorId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="RoomTypeId" class="control-label"></label>
-                <select asp-for="RoomTypeId" class="form-control" asp-items="ViewBag.RoomTypeId"></select>
-                <span asp-validation-for="RoomTypeId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="RoomNumber" class="control-label"></label>
-                <input asp-for="RoomNumber" class="form-control" />
-                <span asp-validation-for="RoomNumber" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Capacity" class="control-label"></label>
-                <input asp-for="Capacity" class="form-control" />
-                <span asp-validation-for="Capacity" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CurrentOccupancy" class="control-label"></label>
-                <input asp-for="CurrentOccupancy" class="form-control" />
-                <span asp-validation-for="CurrentOccupancy" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Status" class="control-label"></label>
-                <select asp-for="Status" class="form-control"></select>
-                <span asp-validation-for="Status" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Description" class="control-label"></label>
-                <input asp-for="Description" class="form-control" />
-                <span asp-validation-for="Description" class="text-danger"></span>
-            </div>
-            <input type="hidden" asp-for="Id" />
-            <div class="form-group">
-                <label asp-for="CreatedAt" class="control-label"></label>
-                <input asp-for="CreatedAt" class="form-control" />
-                <span asp-validation-for="CreatedAt" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="UpdatedAt" class="control-label"></label>
-                <input asp-for="UpdatedAt" class="form-control" />
-                <span asp-validation-for="UpdatedAt" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
+    <!-- Header -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2 class="fw-bold mb-1">Edit Room</h2>
+            <small class="text-muted">Update room configuration and status</small>
+        </div>
+
+        <a asp-action="Index" class="btn btn-light border shadow-sm">
+            ← Back
+        </a>
+    </div>
+
+    <!-- Card -->
+    <div class="card border-0 shadow-lg rounded-4">
+
+        <div class="card-body p-4 p-md-5">
+
+            <form asp-action="Edit">
+
+                <div asp-validation-summary="ModelOnly" class="alert alert-danger py-2"></div>
+
+                <!-- LOCATION HIERARCHY -->
+                <div class="mb-4">
+                    <h6 class="text-uppercase text-muted fw-semibold mb-3">Location Hierarchy</h6>
+
+                    <div class="row g-4">
+
+                        <div class="col-md-4">
+                            <label asp-for="HostelId" class="form-label fw-semibold"></label>
+                            <select asp-for="HostelId"
+                                    class="form-select form-select-lg shadow-sm"
+                                    asp-items="ViewBag.HostelId"></select>
+                            <span asp-validation-for="HostelId" class="text-danger small"></span>
+                        </div>
+
+                        <div class="col-md-4">
+                            <label asp-for="FloorId" class="form-label fw-semibold"></label>
+                            <select asp-for="FloorId"
+                                    class="form-select form-select-lg shadow-sm"
+                                    asp-items="ViewBag.FloorId"></select>
+                            <span asp-validation-for="FloorId" class="text-danger small"></span>
+                        </div>
+
+                        <div class="col-md-4">
+                            <label asp-for="RoomTypeId" class="form-label fw-semibold"></label>
+                            <select asp-for="RoomTypeId"
+                                    class="form-select form-select-lg shadow-sm"
+                                    asp-items="ViewBag.RoomTypeId"></select>
+                            <span asp-validation-for="RoomTypeId" class="text-danger small"></span>
+                        </div>
+
+                    </div>
+                </div>
+
+                <hr class="my-4" />
+
+                <!-- ROOM DETAILS -->
+                <div class="mb-4">
+                    <h6 class="text-uppercase text-muted fw-semibold mb-3">Room Details</h6>
+
+                    <div class="row g-4">
+
+                        <div class="col-md-4">
+                            <label asp-for="RoomNumber" class="form-label fw-semibold"></label>
+                            <input asp-for="RoomNumber"
+                                   class="form-control form-control-lg shadow-sm" />
+                            <span asp-validation-for="RoomNumber" class="text-danger small"></span>
+                        </div>
+
+                        <div class="col-md-4">
+                            <label asp-for="Capacity" class="form-label fw-semibold"></label>
+                            <input asp-for="Capacity"
+                                   type="number"
+                                   class="form-control form-control-lg shadow-sm" />
+                            <span asp-validation-for="Capacity" class="text-danger small"></span>
+                        </div>
+
+                        <div class="col-md-4">
+                            <label asp-for="CurrentOccupancy" class="form-label fw-semibold"></label>
+                            <input asp-for="CurrentOccupancy"
+                                   type="number"
+                                   class="form-control form-control-lg shadow-sm" />
+                            <span asp-validation-for="CurrentOccupancy" class="text-danger small"></span>
+                        </div>
+
+                    </div>
+                </div>
+
+                <hr class="my-4" />
+
+                <!-- STATUS CONTROL -->
+                <div class="mb-4">
+                    <h6 class="text-uppercase text-muted fw-semibold mb-3">Status Control</h6>
+
+                    <div class="row g-4">
+
+                        <div class="col-md-6">
+                            <label asp-for="Status" class="form-label fw-semibold"></label>
+                            <select asp-for="Status"
+                                    class="form-select form-select-lg shadow-sm"></select>
+                            <span asp-validation-for="Status" class="text-danger small"></span>
+                        </div>
+
+                    </div>
+                </div>
+
+                <hr class="my-4" />
+
+                <!-- DESCRIPTION -->
+                <div class="mb-4">
+                    <h6 class="text-uppercase text-muted fw-semibold mb-3">Description</h6>
+
+                    <div class="row g-4">
+
+                        <div class="col-12">
+                            <textarea asp-for="Description"
+                                      class="form-control shadow-sm"
+                                      rows="3"></textarea>
+                            <span asp-validation-for="Description" class="text-danger small"></span>
+                        </div>
+
+                    </div>
+                </div>
+
+                <hr class="my-4" />
+
+                <!-- SYSTEM (READ-ONLY FEEL) -->
+                <div class="mb-4">
+                    <h6 class="text-uppercase text-muted fw-semibold mb-3">System Info</h6>
+
+                    <div class="row g-4">
+
+                        <div class="col-md-6">
+                            <label asp-for="CreatedAt" class="form-label fw-semibold"></label>
+                            <input asp-for="CreatedAt"
+                                   class="form-control shadow-sm"
+                                   readonly />
+                        </div>
+
+                        <div class="col-md-6">
+                            <label asp-for="UpdatedAt" class="form-label fw-semibold"></label>
+                            <input asp-for="UpdatedAt"
+                                   type="datetime-local"
+                                   class="form-control shadow-sm" />
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- Hidden ID -->
+                <input type="hidden" asp-for="Id" />
+
+                <!-- BUTTONS -->
+                <div class="d-flex justify-content-end gap-2 mt-4">
+
+
+                    <button type="submit" class="btn btn-primary px-5 shadow">
+                        Save Changes
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }

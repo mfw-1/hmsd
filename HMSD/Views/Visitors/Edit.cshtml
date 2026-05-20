@@ -1,74 +1,98 @@
 @model HMSD.Data.Visitor
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Edit Visitor";
 }
 
-<h1>Edit</h1>
+<div class="container py-4">
+    <div class="row justify-content-center">
+        <div class="col-lg-6">
 
-<h4>Visitor</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="StudentId" class="control-label"></label>
-                <select asp-for="StudentId" class="form-control" asp-items="ViewBag.StudentId"></select>
-                <span asp-validation-for="StudentId" class="text-danger"></span>
+            <div class="card shadow-sm border-0">
+                <div class="card-header bg-warning text-dark">
+                    <h4 class="mb-0">Edit Visitor</h4>
+                </div>
+
+                <div class="card-body">
+                    <form asp-action="Edit">
+
+                        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                        <div class="mb-3">
+                            <label asp-for="StudentId" class="form-label"></label>
+                            <select asp-for="StudentId" class="form-select" asp-items="ViewBag.StudentId"></select>
+                            <span asp-validation-for="StudentId" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="VisitorName" class="form-label"></label>
+                            <input asp-for="VisitorName" class="form-control" />
+                            <span asp-validation-for="VisitorName" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Relation" class="form-label"></label>
+                            <input asp-for="Relation" class="form-control" />
+                            <span asp-validation-for="Relation" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Phone" class="form-label"></label>
+                            <input asp-for="Phone" class="form-control" />
+                            <span asp-validation-for="Phone" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="CheckInTime" class="form-label"></label>
+                            <input asp-for="CheckInTime" class="form-control" />
+                            <span asp-validation-for="CheckInTime" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="CheckOutTime" class="form-label"></label>
+                            <input asp-for="CheckOutTime" class="form-control" />
+                            <span asp-validation-for="CheckOutTime" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Purpose" class="form-label"></label>
+                            <input asp-for="Purpose" class="form-control" />
+                            <span asp-validation-for="Purpose" class="text-danger"></span>
+                        </div>
+
+                        <hr />
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="CreatedAt" class="form-label"></label>
+                                <input asp-for="CreatedAt" class="form-control" />
+                                <span asp-validation-for="CreatedAt" class="text-danger"></span>
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="UpdatedAt" class="form-label"></label>
+                                <input asp-for="UpdatedAt" class="form-control" />
+                                <span asp-validation-for="UpdatedAt" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <input type="hidden" asp-for="Id" />
+
+                        <div class="d-flex justify-content-end gap-2">
+                            
+                            <button type="submit" class="btn btn-primary">Save Changes</button>
+                        </div>
+                        <a asp-action="Index" class="btn btn-outline-secondary mt-1">Back</a>
+                    </form>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="VisitorName" class="control-label"></label>
-                <input asp-for="VisitorName" class="form-control" />
-                <span asp-validation-for="VisitorName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Relation" class="control-label"></label>
-                <input asp-for="Relation" class="form-control" />
-                <span asp-validation-for="Relation" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Phone" class="control-label"></label>
-                <input asp-for="Phone" class="form-control" />
-                <span asp-validation-for="Phone" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CheckInTime" class="control-label"></label>
-                <input asp-for="CheckInTime" class="form-control" />
-                <span asp-validation-for="CheckInTime" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CheckOutTime" class="control-label"></label>
-                <input asp-for="CheckOutTime" class="form-control" />
-                <span asp-validation-for="CheckOutTime" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Purpose" class="control-label"></label>
-                <input asp-for="Purpose" class="form-control" />
-                <span asp-validation-for="Purpose" class="text-danger"></span>
-            </div>
-            <input type="hidden" asp-for="Id" />
-            <div class="form-group">
-                <label asp-for="CreatedAt" class="control-label"></label>
-                <input asp-for="CreatedAt" class="form-control" />
-                <span asp-validation-for="CreatedAt" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="UpdatedAt" class="control-label"></label>
-                <input asp-for="UpdatedAt" class="form-control" />
-                <span asp-validation-for="UpdatedAt" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
+
+        </div>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }

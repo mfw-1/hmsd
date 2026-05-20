@@ -1,118 +1,195 @@
 @model HMSD.Data.Student
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Create Student";
 }
 
-<h1>Create</h1>
+<div class="container py-4">
 
-<h4>Student</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="RegistrationNo" class="control-label"></label>
-                <input asp-for="RegistrationNo" class="form-control" />
-                <span asp-validation-for="RegistrationNo" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="FirstName" class="control-label"></label>
-                <input asp-for="FirstName" class="form-control" />
-                <span asp-validation-for="FirstName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="LastName" class="control-label"></label>
-                <input asp-for="LastName" class="form-control" />
-                <span asp-validation-for="LastName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CNIC" class="control-label"></label>
-                <input asp-for="CNIC" class="form-control" />
-                <span asp-validation-for="CNIC" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Gender" class="control-label"></label>
-                <input asp-for="Gender" class="form-control" />
-                <span asp-validation-for="Gender" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="DateOfBirth" class="control-label"></label>
-                <input asp-for="DateOfBirth" class="form-control" />
-                <span asp-validation-for="DateOfBirth" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Phone" class="control-label"></label>
-                <input asp-for="Phone" class="form-control" />
-                <span asp-validation-for="Phone" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Email" class="control-label"></label>
-                <input asp-for="Email" class="form-control" />
-                <span asp-validation-for="Email" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Address" class="control-label"></label>
-                <input asp-for="Address" class="form-control" />
-                <span asp-validation-for="Address" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="City" class="control-label"></label>
-                <input asp-for="City" class="form-control" />
-                <span asp-validation-for="City" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="GuardianName" class="control-label"></label>
-                <input asp-for="GuardianName" class="form-control" />
-                <span asp-validation-for="GuardianName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="GuardianPhone" class="control-label"></label>
-                <input asp-for="GuardianPhone" class="form-control" />
-                <span asp-validation-for="GuardianPhone" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="EmergencyContact" class="control-label"></label>
-                <input asp-for="EmergencyContact" class="form-control" />
-                <span asp-validation-for="EmergencyContact" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="InstituteName" class="control-label"></label>
-                <input asp-for="InstituteName" class="form-control" />
-                <span asp-validation-for="InstituteName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Department" class="control-label"></label>
-                <input asp-for="Department" class="form-control" />
-                <span asp-validation-for="Department" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Semester" class="control-label"></label>
-                <input asp-for="Semester" class="form-control" />
-                <span asp-validation-for="Semester" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CreatedAt" class="control-label"></label>
-                <input asp-for="CreatedAt" class="form-control" />
-                <span asp-validation-for="CreatedAt" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="UpdatedAt" class="control-label"></label>
-                <input asp-for="UpdatedAt" class="form-control" />
-                <span asp-validation-for="UpdatedAt" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
+    <!-- Header -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2 class="fw-bold mb-1">Create Student</h2>
+            <small class="text-muted">Register a new student in the system</small>
+        </div>
+
+        <a asp-action="Index" class="btn btn-light border shadow-sm">
+            ← Back
+        </a>
+    </div>
+
+    <!-- Main Card -->
+    <div class="card border-0 shadow-lg rounded-4">
+
+        <div class="card-body p-4 p-md-5">
+
+            <form asp-action="Create">
+
+                <div asp-validation-summary="ModelOnly" class="alert alert-danger py-2"></div>
+
+                <!-- SECTION 1 -->
+                <div class="mb-4">
+                    <h6 class="text-uppercase text-muted fw-semibold mb-3">Identity Information</h6>
+
+                    <div class="row g-4">
+
+                        <div class="col-md-6">
+                            <label asp-for="RegistrationNo" class="form-label fw-semibold"></label>
+                            <input asp-for="RegistrationNo"
+                                   class="form-control form-control-lg shadow-sm"
+                                   placeholder="Registration No" />
+                        </div>
+
+                        <div class="col-md-6">
+                            <label asp-for="CNIC" class="form-label fw-semibold"></label>
+                            <input asp-for="CNIC"
+                                   class="form-control form-control-lg shadow-sm"
+                                   placeholder="CNIC" />
+                        </div>
+
+                        <div class="col-md-6">
+                            <label asp-for="FirstName" class="form-label fw-semibold"></label>
+                            <input asp-for="FirstName"
+                                   class="form-control form-control-lg shadow-sm"
+                                   placeholder="First Name" />
+                        </div>
+
+                        <div class="col-md-6">
+                            <label asp-for="LastName" class="form-label fw-semibold"></label>
+                            <input asp-for="LastName"
+                                   class="form-control form-control-lg shadow-sm"
+                                   placeholder="Last Name" />
+                        </div>
+
+                        <div class="col-md-6">
+                            <label asp-for="Gender" class="form-label fw-semibold"></label>
+                            <input asp-for="Gender"
+                                   class="form-control form-control-lg shadow-sm"
+                                   placeholder="Gender" />
+                        </div>
+
+                        <div class="col-md-6">
+                            <label asp-for="DateOfBirth" class="form-label fw-semibold"></label>
+                            <input asp-for="DateOfBirth"
+                                   type="date"
+                                   class="form-control form-control-lg shadow-sm" />
+                        </div>
+
+                    </div>
+                </div>
+
+                <hr class="my-4" />
+
+                <!-- SECTION 2 -->
+                <div class="mb-4">
+                    <h6 class="text-uppercase text-muted fw-semibold mb-3">Contact Information</h6>
+
+                    <div class="row g-4">
+
+                        <div class="col-md-6">
+                            <label asp-for="Phone" class="form-label fw-semibold"></label>
+                            <input asp-for="Phone"
+                                   class="form-control form-control-lg shadow-sm"
+                                   placeholder="Phone" />
+                        </div>
+
+                        <div class="col-md-6">
+                            <label asp-for="Email" class="form-label fw-semibold"></label>
+                            <input asp-for="Email"
+                                   class="form-control form-control-lg shadow-sm"
+                                   placeholder="Email" />
+                        </div>
+
+                        <div class="col-12">
+                            <label asp-for="Address" class="form-label fw-semibold"></label>
+                            <input asp-for="Address"
+                                   class="form-control form-control-lg shadow-sm"
+                                   placeholder="Full Address" />
+                        </div>
+
+                        <div class="col-md-6">
+                            <label asp-for="City" class="form-label fw-semibold"></label>
+                            <input asp-for="City"
+                                   class="form-control form-control-lg shadow-sm"
+                                   placeholder="City" />
+                        </div>
+
+                    </div>
+                </div>
+
+                <hr class="my-4" />
+
+                <!-- SECTION 3 -->
+                <div class="mb-4">
+                    <h6 class="text-uppercase text-muted fw-semibold mb-3">Academic Information</h6>
+
+                    <div class="row g-4">
+
+                        <div class="col-md-6">
+                            <label asp-for="InstituteName" class="form-label fw-semibold"></label>
+                            <input asp-for="InstituteName"
+                                   class="form-control form-control-lg shadow-sm"
+                                   placeholder="Institute" />
+                        </div>
+
+                        <div class="col-md-6">
+                            <label asp-for="Department" class="form-label fw-semibold"></label>
+                            <input asp-for="Department"
+                                   class="form-control form-control-lg shadow-sm"
+                                   placeholder="Department" />
+                        </div>
+
+                        <div class="col-md-6">
+                            <label asp-for="Semester" class="form-label fw-semibold"></label>
+                            <input asp-for="Semester"
+                                   class="form-control form-control-lg shadow-sm"
+                                   placeholder="Semester" />
+                        </div>
+
+                    </div>
+                </div>
+
+                <hr class="my-4" />
+
+                <!-- SECTION 4 -->
+                <div class="mb-4">
+                    <h6 class="text-uppercase text-muted fw-semibold mb-3">Guardian Information</h6>
+
+                    <div class="row g-4">
+
+                        <div class="col-md-6">
+                            <label asp-for="GuardianName" class="form-label fw-semibold"></label>
+                            <input asp-for="GuardianName"
+                                   class="form-control form-control-lg shadow-sm"
+                                   placeholder="Guardian Name" />
+                        </div>
+
+                        <div class="col-md-6">
+                            <label asp-for="GuardianPhone" class="form-label fw-semibold"></label>
+                            <input asp-for="GuardianPhone"
+                                   class="form-control form-control-lg shadow-sm"
+                                   placeholder="Guardian Phone" />
+                        </div>
+
+                        <div class="col-md-6">
+                            <label asp-for="EmergencyContact" class="form-label fw-semibold"></label>
+                            <input asp-for="EmergencyContact"
+                                   class="form-control form-control-lg shadow-sm"
+                                   placeholder="Emergency Contact" />
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- SUBMIT -->
+                <div class="d-flex justify-content-end mt-4">
+                    <button type="submit" class="btn btn-primary btn-lg px-5 shadow">
+                        Create Student
+                    </button>
+                </div>
+
+            </form>
+
+        </div>
     </div>
 </div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}

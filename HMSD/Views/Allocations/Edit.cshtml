@@ -1,74 +1,160 @@
 @model HMSD.Data.Allocation
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Edit Allocation";
 }
 
-<h1>Edit</h1>
+<div class="container py-4">
 
-<h4>Allocation</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="StudentId" class="control-label"></label>
-                <select asp-for="StudentId" class="form-control" asp-items="ViewBag.StudentId"></select>
-                <span asp-validation-for="StudentId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="BedId" class="control-label"></label>
-                <select asp-for="BedId" class="form-control" asp-items="ViewBag.BedId"></select>
-                <span asp-validation-for="BedId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="AllocatedDate" class="control-label"></label>
-                <input asp-for="AllocatedDate" class="form-control" />
-                <span asp-validation-for="AllocatedDate" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ExpectedCheckoutDate" class="control-label"></label>
-                <input asp-for="ExpectedCheckoutDate" class="form-control" />
-                <span asp-validation-for="ExpectedCheckoutDate" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ActualCheckoutDate" class="control-label"></label>
-                <input asp-for="ActualCheckoutDate" class="form-control" />
-                <span asp-validation-for="ActualCheckoutDate" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Status" class="control-label"></label>
-                <select asp-for="Status" class="form-control"></select>
-                <span asp-validation-for="Status" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Remarks" class="control-label"></label>
-                <input asp-for="Remarks" class="form-control" />
-                <span asp-validation-for="Remarks" class="text-danger"></span>
-            </div>
-            <input type="hidden" asp-for="Id" />
-            <div class="form-group">
-                <label asp-for="CreatedAt" class="control-label"></label>
-                <input asp-for="CreatedAt" class="form-control" />
-                <span asp-validation-for="CreatedAt" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="UpdatedAt" class="control-label"></label>
-                <input asp-for="UpdatedAt" class="form-control" />
-                <span asp-validation-for="UpdatedAt" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
+    <!-- Header -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2 class="fw-bold mb-1">Edit Allocation</h2>
+            <small class="text-muted">Update allocation details</small>
+        </div>
+
+        <a asp-action="Index" class="btn btn-light border shadow-sm">
+            ← Back
+        </a>
+    </div>
+
+    <!-- Card -->
+    <div class="card border-0 shadow-lg rounded-4">
+
+        <div class="card-body p-4 p-md-5">
+
+            <form asp-action="Edit">
+
+                <div asp-validation-summary="ModelOnly" class="alert alert-danger py-2"></div>
+
+                <!-- STUDENT / BED -->
+                <div class="mb-4">
+                    <h6 class="text-uppercase text-muted fw-semibold mb-3">Assignment Info</h6>
+
+                    <div class="row g-4">
+
+                        <div class="col-md-6">
+                            <label asp-for="StudentId" class="form-label fw-semibold"></label>
+                            <select asp-for="StudentId"
+                                    class="form-select form-select-lg shadow-sm"
+                                    asp-items="ViewBag.StudentId"></select>
+                            <span asp-validation-for="StudentId" class="text-danger small"></span>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label asp-for="BedId" class="form-label fw-semibold"></label>
+                            <select asp-for="BedId"
+                                    class="form-select form-select-lg shadow-sm"
+                                    asp-items="ViewBag.BedId"></select>
+                            <span asp-validation-for="BedId" class="text-danger small"></span>
+                        </div>
+
+                    </div>
+                </div>
+
+                <hr class="my-4" />
+
+                <!-- DATES -->
+                <div class="mb-4">
+                    <h6 class="text-uppercase text-muted fw-semibold mb-3">Dates</h6>
+
+                    <div class="row g-4">
+
+                        <div class="col-md-4">
+                            <label asp-for="AllocatedDate" class="form-label fw-semibold"></label>
+                            <input asp-for="AllocatedDate"
+                                   type="date"
+                                   class="form-control shadow-sm" />
+                        </div>
+
+                        <div class="col-md-4">
+                            <label asp-for="ExpectedCheckoutDate" class="form-label fw-semibold"></label>
+                            <input asp-for="ExpectedCheckoutDate"
+                                   type="date"
+                                   class="form-control shadow-sm" />
+                        </div>
+
+                        <div class="col-md-4">
+                            <label asp-for="ActualCheckoutDate" class="form-label fw-semibold"></label>
+                            <input asp-for="ActualCheckoutDate"
+                                   type="date"
+                                   class="form-control shadow-sm" />
+                        </div>
+
+                    </div>
+                </div>
+
+                <hr class="my-4" />
+
+                <!-- STATUS / REMARKS -->
+                <div class="mb-4">
+                    <h6 class="text-uppercase text-muted fw-semibold mb-3">Status & Notes</h6>
+
+                    <div class="row g-4">
+
+                        <div class="col-md-6">
+                            <label asp-for="Status" class="form-label fw-semibold"></label>
+                            <select asp-for="Status"
+                                    class="form-select form-select-lg shadow-sm"></select>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label asp-for="Remarks" class="form-label fw-semibold"></label>
+                            <input asp-for="Remarks"
+                                   class="form-control form-control-lg shadow-sm"
+                                   placeholder="Optional remarks..." />
+                        </div>
+
+                    </div>
+                </div>
+
+                <hr class="my-4" />
+
+                <!-- SYSTEM -->
+                <div class="mb-4">
+                    <h6 class="text-uppercase text-muted fw-semibold mb-3">System Info</h6>
+
+                    <div class="row g-4">
+
+                        <div class="col-md-6">
+                            <label asp-for="CreatedAt" class="form-label fw-semibold"></label>
+                            <input asp-for="CreatedAt"
+                                   type="datetime-local"
+                                   class="form-control shadow-sm" />
+                        </div>
+
+                        <div class="col-md-6">
+                            <label asp-for="UpdatedAt" class="form-label fw-semibold"></label>
+                            <input asp-for="UpdatedAt"
+                                   type="datetime-local"
+                                   class="form-control shadow-sm" />
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- Hidden ID -->
+                <input type="hidden" asp-for="Id" />
+
+                <!-- BUTTONS -->
+                <div class="d-flex justify-content-end gap-2 mt-4">
+
+                    
+
+                    <button type="submit" class="btn btn-primary px-5 shadow">
+                        Save Changes
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }

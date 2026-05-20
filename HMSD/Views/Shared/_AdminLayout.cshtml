@@ -339,13 +339,6 @@
                 margin-top: 10px;
                 border-radius: 12px;
             }
-
-                .form-engine-card form .row {
-                    display: flex;
-                    flex-direction: column;
-                    gap: 1.5rem; /* Better spacing between fields */
-                }
-
             /* Force all form elements to be full width */
             .form-group, .col-12, .col-md-6 {
                 width: 100% !important;
@@ -794,7 +787,7 @@
 
         const group = input.closest(".form-group") || input.parentElement;
         if (group && !group.classList.contains("col-md-6") && !group.classList.contains("col-12")) {
-        group.className = "col-12 col-md-6 mb-2";
+        group.className = "col-6 col-md-6 mb-2";
         }
 
         // Map labels above inputs beautifully
@@ -825,45 +818,6 @@
         }
 
         });
-    </script>
-
-    <script>
-        // 5. DATA FIELD FORM RE-ENGINEERING (Full-Width Logic)
-        const form = document.querySelector(".form-engine-card form");
-        if (form) {
-        // Remove existing grid classes to prevent conflicts
-        form.querySelectorAll(".col-md-6").forEach(el => el.classList.remove("col-md-6"));
-
-        form.querySelectorAll("input:not([type='submit']), select, textarea").forEach(function (input) {
-        input.classList.add("form-control-sm");
-        const group = input.closest(".form-group") || input.parentElement;
-        if (group) group.classList.add("col-12");
-        });
-
-        // Ensure buttons are in a clean row
-        const submitBtn = form.querySelector("input[type='submit'], button[type='submit']");
-        if (submitBtn && !form.querySelector(".action-row")) {
-        const actionContainer = document.createElement("div");
-        actionContainer.className = "action-row";
-        submitBtn.className = "btn btn-primary px-4 fw-semibold shadow-sm";
-
-        form.appendChild(actionContainer);
-        actionContainer.appendChild(submitBtn);
-
-        // Add back button to action row if exists
-        const backBtn = document.querySelector(".form-engine-card a.btn-light");
-        if (backBtn) {
-        backBtn.className = "btn btn-outline-secondary px-4";
-        actionContainer.appendChild(backBtn);
-        }
-        }
-        }
-    </script>
-    <script>
-        const element = document.querySelector('.col-md-4');
-
-        // Remove a single class
-        element.classList.remove('col-md-4');
     </script>
     @RenderSection("Scripts", required: false)
 

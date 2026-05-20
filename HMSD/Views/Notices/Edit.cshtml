@@ -1,59 +1,141 @@
 @model HMSD.Data.Notice
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Edit Notice";
 }
 
-<h1>Edit</h1>
+<div class="container py-4">
 
-<h4>Notice</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Title" class="control-label"></label>
-                <input asp-for="Title" class="form-control" />
-                <span asp-validation-for="Title" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Description" class="control-label"></label>
-                <input asp-for="Description" class="form-control" />
-                <span asp-validation-for="Description" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="PostedBy" class="control-label"></label>
-                <input asp-for="PostedBy" class="form-control" />
-                <span asp-validation-for="PostedBy" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ExpiryDate" class="control-label"></label>
-                <input asp-for="ExpiryDate" class="form-control" />
-                <span asp-validation-for="ExpiryDate" class="text-danger"></span>
-            </div>
-            <input type="hidden" asp-for="Id" />
-            <div class="form-group">
-                <label asp-for="CreatedAt" class="control-label"></label>
-                <input asp-for="CreatedAt" class="form-control" />
-                <span asp-validation-for="CreatedAt" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="UpdatedAt" class="control-label"></label>
-                <input asp-for="UpdatedAt" class="form-control" />
-                <span asp-validation-for="UpdatedAt" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
+    <!-- Header -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2 class="fw-bold mb-1">Edit Notice</h2>
+            <small class="text-muted">Update announcement details</small>
+        </div>
+
+        <a asp-action="Index" class="btn btn-light border shadow-sm">
+            ← Back
+        </a>
+    </div>
+
+    <!-- Card -->
+    <div class="card border-0 shadow-lg rounded-4">
+
+        <div class="card-body p-4 p-md-5">
+
+            <form asp-action="Edit">
+
+                <div asp-validation-summary="ModelOnly" class="alert alert-danger py-2"></div>
+
+                <!-- NOTICE INFO -->
+                <div class="mb-4">
+                    <h6 class="text-uppercase text-muted fw-semibold mb-3">Notice Details</h6>
+
+                    <div class="row g-4">
+
+                        <div class="col-md-6">
+                            <label asp-for="Title" class="form-label fw-semibold"></label>
+                            <input asp-for="Title"
+                                   class="form-control form-control-lg shadow-sm"
+                                   placeholder="Notice title..." />
+                            <span asp-validation-for="Title" class="text-danger small"></span>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label asp-for="PostedBy" class="form-label fw-semibold"></label>
+                            <input asp-for="PostedBy"
+                                   class="form-control form-control-lg shadow-sm"
+                                   placeholder="Admin / Warden / Staff name" />
+                            <span asp-validation-for="PostedBy" class="text-danger small"></span>
+                        </div>
+
+                    </div>
+                </div>
+
+                <hr class="my-4" />
+
+                <!-- DESCRIPTION -->
+                <div class="mb-4">
+                    <h6 class="text-uppercase text-muted fw-semibold mb-3">Message</h6>
+
+                    <div class="row g-4">
+
+                        <div class="col-12">
+                            <textarea asp-for="Description"
+                                      class="form-control shadow-sm"
+                                      rows="5"
+                                      placeholder="Update notice content..."></textarea>
+                            <span asp-validation-for="Description" class="text-danger small"></span>
+                        </div>
+
+                    </div>
+                </div>
+
+                <hr class="my-4" />
+
+                <!-- VALIDITY -->
+                <div class="mb-4">
+                    <h6 class="text-uppercase text-muted fw-semibold mb-3">Validity</h6>
+
+                    <div class="row g-4">
+
+                        <div class="col-md-6">
+                            <label asp-for="ExpiryDate" class="form-label fw-semibold"></label>
+                            <input asp-for="ExpiryDate"
+                                   type="date"
+                                   class="form-control form-control-lg shadow-sm" />
+                            <span asp-validation-for="ExpiryDate" class="text-danger small"></span>
+                        </div>
+
+                    </div>
+                </div>
+
+                <hr class="my-4" />
+
+                <!-- SYSTEM -->
+                <div class="mb-4">
+                    <h6 class="text-uppercase text-muted fw-semibold mb-3">System Info</h6>
+
+                    <div class="row g-4">
+
+                        <div class="col-md-6">
+                            <label asp-for="CreatedAt" class="form-label fw-semibold"></label>
+                            <input asp-for="CreatedAt"
+                                   type="datetime-local"
+                                   class="form-control shadow-sm" />
+                        </div>
+
+                        <div class="col-md-6">
+                            <label asp-for="UpdatedAt" class="form-label fw-semibold"></label>
+                            <input asp-for="UpdatedAt"
+                                   type="datetime-local"
+                                   class="form-control shadow-sm" />
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- Hidden ID -->
+                <input type="hidden" asp-for="Id" />
+
+                <!-- BUTTONS -->
+                <div class="d-flex justify-content-end gap-2 mt-4">
+
+
+                    <button type="submit" class="btn btn-primary px-5 shadow">
+                        Save Changes
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }

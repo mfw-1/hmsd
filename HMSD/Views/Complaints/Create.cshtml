@@ -1,57 +1,112 @@
 @model HMSD.Data.Complaint
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Create Complaint";
 }
 
-<h1>Create</h1>
+<div class="container py-4">
 
-<h4>Complaint</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="StudentId" class="control-label"></label>
-                <select asp-for="StudentId" class ="form-control" asp-items="ViewBag.StudentId"></select>
-            </div>
-            <div class="form-group">
-                <label asp-for="Title" class="control-label"></label>
-                <input asp-for="Title" class="form-control" />
-                <span asp-validation-for="Title" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Description" class="control-label"></label>
-                <input asp-for="Description" class="form-control" />
-                <span asp-validation-for="Description" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Status" class="control-label"></label>
-                <select asp-for="Status" class="form-control"></select>
-                <span asp-validation-for="Status" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CreatedAt" class="control-label"></label>
-                <input asp-for="CreatedAt" class="form-control" />
-                <span asp-validation-for="CreatedAt" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="UpdatedAt" class="control-label"></label>
-                <input asp-for="UpdatedAt" class="form-control" />
-                <span asp-validation-for="UpdatedAt" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
+    <!-- Header -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2 class="fw-bold mb-1">Create Complaint</h2>
+            <small class="text-muted">Submit a new complaint record</small>
+        </div>
+
+        <a asp-action="Index" class="btn btn-light border shadow-sm">
+            ← Back
+        </a>
+    </div>
+
+    <!-- Main Card -->
+    <div class="card border-0 shadow-lg rounded-4">
+
+        <div class="card-body p-4 p-md-5">
+
+            <form asp-action="Create">
+
+                <div asp-validation-summary="ModelOnly" class="alert alert-danger py-2"></div>
+
+                <!-- SECTION 1 -->
+                <div class="mb-4">
+                    <h6 class="text-uppercase text-muted fw-semibold mb-3">Student Info</h6>
+
+                    <div class="row g-4">
+
+                        <div class="col-md-6">
+                            <label asp-for="StudentId" class="form-label fw-semibold"></label>
+                            <select asp-for="StudentId" class="form-select form-select-lg shadow-sm"
+                                    asp-items="ViewBag.StudentId"></select>
+                        </div>
+
+                    </div>
+                </div>
+
+                <hr class="my-4" />
+
+                <!-- SECTION 2 -->
+                <div class="mb-4">
+                    <h6 class="text-uppercase text-muted fw-semibold mb-3">Complaint Details</h6>
+
+                    <div class="row g-4">
+
+                        <div class="col-md-6">
+                            <label asp-for="Title" class="form-label fw-semibold"></label>
+                            <input asp-for="Title" class="form-control form-control-lg shadow-sm"
+                                   placeholder="Enter complaint title" />
+                            <span asp-validation-for="Title" class="text-danger small"></span>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label asp-for="Status" class="form-label fw-semibold"></label>
+                            <select asp-for="Status" class="form-select form-select-lg shadow-sm"></select>
+                            <span asp-validation-for="Status" class="text-danger small"></span>
+                        </div>
+
+                        <div class="col-12">
+                            <label asp-for="Description" class="form-label fw-semibold"></label>
+                            <textarea asp-for="Description"
+                                      class="form-control shadow-sm"
+                                      rows="4"
+                                      placeholder="Describe the issue in detail..."></textarea>
+                            <span asp-validation-for="Description" class="text-danger small"></span>
+                        </div>
+
+                    </div>
+                </div>
+
+                <hr class="my-4" />
+
+                <!-- SECTION 3 -->
+                <div class="mb-4">
+                    <h6 class="text-uppercase text-muted fw-semibold mb-3">Timestamps</h6>
+
+                    <div class="row g-4">
+
+                        <div class="col-md-6">
+                            <label asp-for="CreatedAt" class="form-label fw-semibold"></label>
+                            <input asp-for="CreatedAt" type="datetime-local"
+                                   class="form-control shadow-sm" />
+                        </div>
+
+                        <div class="col-md-6">
+                            <label asp-for="UpdatedAt" class="form-label fw-semibold"></label>
+                            <input asp-for="UpdatedAt" type="datetime-local"
+                                   class="form-control shadow-sm" />
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- SUBMIT -->
+                <div class="d-flex justify-content-end mt-4">
+                    <button type="submit" class="btn btn-primary btn-lg px-5 shadow">
+                        Submit Complaint
+                    </button>
+                </div>
+
+            </form>
+
+        </div>
     </div>
 </div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}

@@ -1,67 +1,166 @@
 @model HMSD.Data.Payment
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Create Payment";
 }
 
-<h1>Create</h1>
+<div class="container py-4">
 
-<h4>Payment</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="StudentFeeId" class="control-label"></label>
-                <select asp-for="StudentFeeId" class ="form-control" asp-items="ViewBag.StudentFeeId"></select>
-            </div>
-            <div class="form-group">
-                <label asp-for="AmountPaid" class="control-label"></label>
-                <input asp-for="AmountPaid" class="form-control" />
-                <span asp-validation-for="AmountPaid" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="PaymentDate" class="control-label"></label>
-                <input asp-for="PaymentDate" class="form-control" />
-                <span asp-validation-for="PaymentDate" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="PaymentMethod" class="control-label"></label>
-                <input asp-for="PaymentMethod" class="form-control" />
-                <span asp-validation-for="PaymentMethod" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="TransactionId" class="control-label"></label>
-                <input asp-for="TransactionId" class="form-control" />
-                <span asp-validation-for="TransactionId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ReceivedBy" class="control-label"></label>
-                <input asp-for="ReceivedBy" class="form-control" />
-                <span asp-validation-for="ReceivedBy" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CreatedAt" class="control-label"></label>
-                <input asp-for="CreatedAt" class="form-control" />
-                <span asp-validation-for="CreatedAt" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="UpdatedAt" class="control-label"></label>
-                <input asp-for="UpdatedAt" class="form-control" />
-                <span asp-validation-for="UpdatedAt" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
+    <!-- Header -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2 class="fw-bold mb-1">Create Payment</h2>
+            <small class="text-muted">Record a student fee payment</small>
+        </div>
+
+        <a asp-action="Index" class="btn btn-light border shadow-sm">
+            ← Back
+        </a>
+    </div>
+
+    <!-- Card -->
+    <div class="card border-0 shadow-lg rounded-4">
+
+        <div class="card-body p-4 p-md-5">
+
+            <form asp-action="Create">
+
+                <div asp-validation-summary="ModelOnly" class="alert alert-danger py-2"></div>
+
+                <!-- PAYMENT LINK -->
+                <div class="mb-4">
+                    <h6 class="text-uppercase text-muted fw-semibold mb-3">Fee Reference</h6>
+
+                    <div class="row g-4">
+
+                        <div class="col-md-6">
+                            <label asp-for="StudentFeeId" class="form-label fw-semibold"></label>
+                            <select asp-for="StudentFeeId"
+                                    class="form-select form-select-lg shadow-sm"
+                                    asp-items="ViewBag.StudentFeeId"></select>
+                            <span asp-validation-for="StudentFeeId" class="text-danger small"></span>
+                        </div>
+
+                    </div>
+                </div>
+
+                <hr class="my-4" />
+
+                <!-- PAYMENT DETAILS -->
+                <div class="mb-4">
+                    <h6 class="text-uppercase text-muted fw-semibold mb-3">Payment Details</h6>
+
+                    <div class="row g-4">
+
+                        <div class="col-md-6">
+                            <label asp-for="AmountPaid" class="form-label fw-semibold"></label>
+                            <div class="input-group input-group-lg shadow-sm">
+                                <span class="input-group-text">PKR</span>
+                                <input asp-for="AmountPaid" class="form-control" />
+                            </div>
+                            <span asp-validation-for="AmountPaid" class="text-danger small"></span>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label asp-for="PaymentDate" class="form-label fw-semibold"></label>
+                            <input asp-for="PaymentDate"
+                                   type="date"
+                                   class="form-control form-control-lg shadow-sm" />
+                            <span asp-validation-for="PaymentDate" class="text-danger small"></span>
+                        </div>
+
+                    </div>
+                </div>
+
+                <hr class="my-4" />
+
+                <!-- TRANSACTION INFO -->
+                <div class="mb-4">
+                    <h6 class="text-uppercase text-muted fw-semibold mb-3">Transaction Info</h6>
+
+                    <div class="row g-4">
+
+                        <div class="col-md-6">
+                            <label asp-for="PaymentMethod" class="form-label fw-semibold"></label>
+                            <input asp-for="PaymentMethod"
+                                   class="form-control form-control-lg shadow-sm"
+                                   placeholder="Cash / Bank / Online Transfer" />
+                            <span asp-validation-for="PaymentMethod" class="text-danger small"></span>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label asp-for="TransactionId" class="form-label fw-semibold"></label>
+                            <input asp-for="TransactionId"
+                                   class="form-control form-control-lg shadow-sm"
+                                   placeholder="Transaction / Receipt ID" />
+                            <span asp-validation-for="TransactionId" class="text-danger small"></span>
+                        </div>
+
+                    </div>
+                </div>
+
+                <hr class="my-4" />
+
+                <!-- RECEIPT INFO -->
+                <div class="mb-4">
+                    <h6 class="text-uppercase text-muted fw-semibold mb-3">Receipt</h6>
+
+                    <div class="row g-4">
+
+                        <div class="col-md-6">
+                            <label asp-for="ReceivedBy" class="form-label fw-semibold"></label>
+                            <input asp-for="ReceivedBy"
+                                   class="form-control form-control-lg shadow-sm"
+                                   placeholder="Cashier / Admin name" />
+                            <span asp-validation-for="ReceivedBy" class="text-danger small"></span>
+                        </div>
+
+                    </div>
+                </div>
+
+                <hr class="my-4" />
+
+                <!-- SYSTEM -->
+                <div class="mb-4">
+                    <h6 class="text-uppercase text-muted fw-semibold mb-3">System Info</h6>
+
+                    <div class="row g-4">
+
+                        <div class="col-md-6">
+                            <label asp-for="CreatedAt" class="form-label fw-semibold"></label>
+                            <input asp-for="CreatedAt"
+                                   type="datetime-local"
+                                   class="form-control shadow-sm" />
+                        </div>
+
+                        <div class="col-md-6">
+                            <label asp-for="UpdatedAt" class="form-label fw-semibold"></label>
+                            <input asp-for="UpdatedAt"
+                                   type="datetime-local"
+                                   class="form-control shadow-sm" />
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- BUTTONS -->
+                <div class="d-flex justify-content-end gap-2 mt-4">
+
+
+                    <button type="submit" class="btn btn-success px-5 shadow">
+                        Record Payment
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }
