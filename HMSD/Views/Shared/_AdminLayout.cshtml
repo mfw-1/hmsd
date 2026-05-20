@@ -585,7 +585,7 @@
         const controlHeader = document.createElement("div");
         controlHeader.className = "d-flex justify-content-end mb-3";
         controlHeader.innerHTML = `
-        <div class="input-group" style="max-width: 320px;">
+        <div class="input-group" style="max-width: 320px;display : -webkit-inline-box;">
         <span class="input-group-text bg-transparent border-end-0 text-muted"><i class="fa-solid fa-magnifying-glass fs-7"></i></span>
         <input type="text" class="form-control form-control-sm border-start-0 ps-0" placeholder="Search data grid...">
         </div>
@@ -828,8 +828,6 @@
     </script>
 
     <script>
-        // ... (Keep existing code) ...
-
         // 5. DATA FIELD FORM RE-ENGINEERING (Full-Width Logic)
         const form = document.querySelector(".form-engine-card form");
         if (form) {
