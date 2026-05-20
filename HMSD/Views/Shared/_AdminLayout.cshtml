@@ -257,6 +257,8 @@
                 }
             }
 
+
+
     </style>
 
 </head>
@@ -440,7 +442,74 @@
 
     <!-- Bootstrap -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
 
+        document.querySelectorAll("table.table").forEach(function (table) {
+
+        // avoid double wrapping
+        if (table.closest(".table-responsive")) return;
+
+        // create wrapper
+        const wrapper = document.createElement("div");
+        wrapper.classList.add("table-responsive");
+
+        // insert wrapper before table
+        table.parentNode.insertBefore(wrapper, table);
+
+        // move table inside wrapper
+        wrapper.appendChild(table);
+        });
+
+        });
+    </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+
+        document.querySelectorAll("a").forEach(function (a) {
+
+        const text = a.textContent.trim().toLowerCase();
+
+        // CREATE NEW
+        if (text === "create new") {
+        a.classList.add("btn", "btn-primary", "btn-sm");
+        }
+
+        // EDIT
+        else if (text === "edit") {
+        a.classList.add("btn", "btn-outline-primary", "btn-sm");
+        }
+
+        // DETAILS
+        else if (text === "details") {
+        a.classList.add("btn", "btn-outline-info", "btn-sm");
+        }
+
+        // DELETE
+        else if (text === "delete") {
+        a.classList.add("btn", "btn-outline-danger", "btn-sm");
+        }
+
+        // BACK TO LIST
+        else if (text === "back to list") {
+        a.classList.add("btn", "btn-secondary", "btn-sm");
+        }
+
+        });
+
+        });
+    </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+
+        document.querySelectorAll("table.table").forEach(function (table) {
+
+        table.classList.add("table-striped");
+
+        });
+
+        });
+    </script>
     @RenderSection("Scripts", required: false)
 
 </body>
