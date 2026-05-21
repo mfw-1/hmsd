@@ -103,7 +103,7 @@ The system helps manage:
 ## 1️⃣ Clone Repository
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/YOUR_REPOSITORY.git
+git clone https://github.com/MFW-1/HMSD.git
 ```
 
 ---
