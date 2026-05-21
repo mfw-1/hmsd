@@ -5,71 +5,163 @@
 }
 
 <div class="container py-4">
-    <div class="row justify-content-center">
-        <div class="col-lg-6">
 
-            <div class="card shadow-sm border-0">
-                <div class="card-header bg-primary text-white">
-                    <h4 class="mb-0">Create Visitor</h4>
+    <!-- Header -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2 class="fw-bold mb-1">Create Visitor</h2>
+            <small class="text-muted">Register a visitor entry in the system</small>
+        </div>
+
+        <a asp-action="Index" class="btn btn-light border shadow-sm">
+            ← Back
+        </a>
+    </div>
+
+    <!-- Main Card -->
+    <div class="card border-0 shadow-lg rounded-4">
+
+        <div class="card-body p-4 p-md-5">
+
+            <form asp-action="Create">
+
+                <div asp-validation-summary="ModelOnly"
+                     class="alert alert-danger py-2"></div>
+
+                <!-- SECTION 1 -->
+                <div class="mb-4">
+                    <h6 class="text-uppercase text-muted fw-semibold mb-3">
+                        Student Information
+                    </h6>
+
+                    <div class="row g-4">
+
+                        <div class="col-md-6">
+                            <label asp-for="StudentId"
+                                   class="form-label fw-semibold"></label>
+
+                            <select asp-for="StudentId"
+                                    class="form-select form-select-lg shadow-sm"
+                                    asp-items="ViewBag.StudentId">
+                            </select>
+                        </div>
+
+                    </div>
                 </div>
 
-                <div class="card-body">
-                    <form asp-action="Create">
+                <hr class="my-4" />
 
-                        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+                <!-- SECTION 2 -->
+                <div class="mb-4">
+                    <h6 class="text-uppercase text-muted fw-semibold mb-3">
+                        Visitor Details
+                    </h6>
 
-                        <div class="mb-3">
-                            <label asp-for="StudentId" class="form-label"></label>
-                            <select asp-for="StudentId" class="form-select" asp-items="ViewBag.StudentId"></select>
+                    <div class="row g-4">
+
+                        <div class="col-md-6">
+                            <label asp-for="VisitorName"
+                                   class="form-label fw-semibold"></label>
+
+                            <input asp-for="VisitorName"
+                                   class="form-control form-control-lg shadow-sm"
+                                   placeholder="Visitor Name" />
+
+                            <span asp-validation-for="VisitorName"
+                                  class="text-danger small"></span>
                         </div>
 
-                        <div class="mb-3">
-                            <label asp-for="VisitorName" class="form-label"></label>
-                            <input asp-for="VisitorName" class="form-control" />
-                            <span asp-validation-for="VisitorName" class="text-danger"></span>
+                        <div class="col-md-6">
+                            <label asp-for="Relation"
+                                   class="form-label fw-semibold"></label>
+
+                            <input asp-for="Relation"
+                                   class="form-control form-control-lg shadow-sm"
+                                   placeholder="Relation with Student" />
+
+                            <span asp-validation-for="Relation"
+                                  class="text-danger small"></span>
                         </div>
 
-                        <div class="mb-3">
-                            <label asp-for="Relation" class="form-label"></label>
-                            <input asp-for="Relation" class="form-control" />
-                            <span asp-validation-for="Relation" class="text-danger"></span>
+                        <div class="col-md-6">
+                            <label asp-for="Phone"
+                                   class="form-label fw-semibold"></label>
+
+                            <input asp-for="Phone"
+                                   class="form-control form-control-lg shadow-sm"
+                                   placeholder="Phone Number" />
+
+                            <span asp-validation-for="Phone"
+                                  class="text-danger small"></span>
                         </div>
 
-                        <div class="mb-3">
-                            <label asp-for="Phone" class="form-label"></label>
-                            <input asp-for="Phone" class="form-control" />
-                            <span asp-validation-for="Phone" class="text-danger"></span>
+                        <div class="col-md-6">
+                            <label asp-for="Purpose"
+                                   class="form-label fw-semibold"></label>
+
+                            <input asp-for="Purpose"
+                                   class="form-control form-control-lg shadow-sm"
+                                   placeholder="Purpose of Visit" />
+
+                            <span asp-validation-for="Purpose"
+                                  class="text-danger small"></span>
                         </div>
 
-                        <div class="mb-3">
-                            <label asp-for="CheckInTime" class="form-label"></label>
-                            <input asp-for="CheckInTime" class="form-control" />
-                            <span asp-validation-for="CheckInTime" class="text-danger"></span>
-                        </div>
-
-                        <div class="mb-3">
-                            <label asp-for="CheckOutTime" class="form-label"></label>
-                            <input asp-for="CheckOutTime" class="form-control" />
-                            <span asp-validation-for="CheckOutTime" class="text-danger"></span>
-                        </div>
-
-                        <div class="mb-3">
-                            <label asp-for="Purpose" class="form-label"></label>
-                            <input asp-for="Purpose" class="form-control" />
-                            <span asp-validation-for="Purpose" class="text-danger"></span>
-                        </div>
-
-                        <div class="flex justify-content-end gap-2">
-                            
-                            <button type="submit" class="btn btn-primary">Create</button>
-                        </div>
-                        <a asp-action="Index" class="btn btn-outline-secondary mt-1">Back</a>
-                    </form>
+                    </div>
                 </div>
-            </div>
+
+                <hr class="my-4" />
+
+                <!-- SECTION 3 -->
+                <div class="mb-4">
+                    <h6 class="text-uppercase text-muted fw-semibold mb-3">
+                        Visit Timing
+                    </h6>
+
+                    <div class="row g-4">
+
+                        <div class="col-md-6">
+                            <label asp-for="CheckInTime"
+                                   class="form-label fw-semibold"></label>
+
+                            <input asp-for="CheckInTime"
+                                   type="datetime-local"
+                                   class="form-control form-control-lg shadow-sm" />
+
+                            <span asp-validation-for="CheckInTime"
+                                  class="text-danger small"></span>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label asp-for="CheckOutTime"
+                                   class="form-label fw-semibold"></label>
+
+                            <input asp-for="CheckOutTime"
+                                   type="datetime-local"
+                                   class="form-control form-control-lg shadow-sm" />
+
+                            <span asp-validation-for="CheckOutTime"
+                                  class="text-danger small"></span>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- ACTIONS -->
+                <div class="d-flex justify-content-end mt-4">
+
+                    <button type="submit"
+                            class="btn btn-primary btn-lg px-5 shadow">
+                        Create Visitor
+                    </button>
+
+                </div>
+
+            </form>
 
         </div>
     </div>
+
 </div>
 
 @section Scripts {

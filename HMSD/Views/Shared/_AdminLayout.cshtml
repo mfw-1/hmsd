@@ -368,6 +368,45 @@
                 display: flex;
                 gap: 10px;
             }
+
+            .table-toolbar {
+                width: 100%;
+                display: flex;
+                justify-content: flex-end;
+                margin-bottom: 14px;
+            }
+
+            .table-search {
+                width: 320px;
+                height: 44px;
+                background: var(--bg-topbar);
+                border: 1px solid var(--border-color);
+                border-radius: 10px;
+                display: flex;
+                align-items: center;
+                overflow: hidden;
+                box-shadow: var(--card-shadow);
+            }
+
+                .table-search .search-icon {
+                    width: 44px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    color: var(--text-muted);
+                    font-size: 14px;
+                }
+
+                .table-search input {
+                    background: transparent !important;
+                    height: 100%;
+                    font-size: 14px;
+                    color: var(--text-main);
+                }
+
+                    .table-search input::placeholder {
+                        color: var(--text-muted);
+                    }
     </style>
 </head>
 
@@ -576,13 +615,21 @@
 
         // CONTROLS HEADER BAR (Search Box Alignment)
         const controlHeader = document.createElement("div");
-        controlHeader.className = "d-flex justify-content-end mb-3";
+
+        controlHeader.className = "table-toolbar";
+
         controlHeader.innerHTML = `
-        <div class="input-group" style="max-width: 320px;display : -webkit-inline-box;">
-        <span class="input-group-text bg-transparent border-end-0 text-muted"><i class="fa-solid fa-magnifying-glass fs-7"></i></span>
-        <input type="text" class="form-control form-control-sm border-start-0 ps-0" placeholder="Search data grid...">
+        <div class="table-search">
+        <span class="search-icon">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        </span>
+
+        <input type="text"
+        class="form-control form-control-sm border-0 shadow-none"
+        placeholder="Search data grid...">
         </div>
         `;
+
         wrapper.parentNode.insertBefore(controlHeader, wrapper);
 
         // PAGINATION FOOTER SYSTEM INJECTION
