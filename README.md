@@ -94,6 +94,7 @@ The system helps manage:
 
 <p align="center">
   <img src="./students.png" width="100%" />
+  <img src="./students1.png" width="100%" />
 </p>
 
 ---
