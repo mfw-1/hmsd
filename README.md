@@ -85,6 +85,7 @@ The system helps manage:
 
 <p align="center">
   <img src="./hmsd.png" width="100%" />
+  <img src="./hmsd1.png" width="100%" />
 </p>
 
 ---
